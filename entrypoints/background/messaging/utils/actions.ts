@@ -1,0 +1,9 @@
+export const GET_SHORTCUT = "GET_SHORTCUT";
+export const SET_SHORTCUT = "SET_SHORTCUT";
+export const PROCESS_IMG = "PROCESS_IMG";
+export const EXTRACT_TXT = "EXTRACT_TXT";
+export const EXTRACT_IMG = "EXTRACT_IMG";
+export const TRANSFORM_IMG = "TRANSFORM_IMG";
+export const UPDATE_LANG = "UPDATE_LANG";
+export const SET_LANG = "SET_LANG";
+export const INITIALIZE = "INITIALIZE";
