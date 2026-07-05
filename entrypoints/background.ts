@@ -10,8 +10,6 @@ export default defineBackground(() => {
     .catch((error) => {
       console.error("Failed to create offscreen document:", error);
     });
-  console.log("It's allive");
-
   browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("Message Received: ", message);
 

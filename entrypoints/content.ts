@@ -6,7 +6,6 @@ import { insertCanvas, removeCanvas } from "./content/canvas";
 export default defineContentScript({
   matches: ["*://*/*"],
   async main() {
-    console.log("Hello content.");
     const preset = await getShortcut();
     const pressed = new Set<string>();
     let triggered = false;
@@ -27,10 +26,11 @@ export default defineContentScript({
       }
     };
     const captureScreenshot = async () => {
-      console.log("Screenshot Triggered");
       const { canvas, ctx } = insertCanvas();
       let selectionRectangle = await handleDrawing(canvas, ctx);
-      captureScreen(selectionRectangle);
+      if (selectionRectangle) {
+        captureScreen(selectionRectangle);
+      }
       removeCanvas();
     };
 

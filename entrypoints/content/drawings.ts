@@ -11,7 +11,7 @@ export interface SelectionRectangle {
 export function handleDrawing(
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
-): Promise<SelectionRectangle> {
+): Promise<SelectionRectangle | null> {
   return new Promise((resolve) => {
     let isDragging = false;
 
@@ -39,6 +39,12 @@ export function handleDrawing(
 
       drawSelection(canvas, start, current, ctx);
     };
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        listenerCleanup();
+        resolve(null);
+      }
+    };
 
     const onMouseUp = () => {
       isDragging = false;
@@ -56,11 +62,13 @@ export function handleDrawing(
       canvas.removeEventListener("mousedown", onMouseDown);
       canvas.removeEventListener("mousemove", onMouseMove);
       canvas.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("keydown", onEscape);
     };
 
     canvas.addEventListener("mousedown", onMouseDown);
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("keydown", onEscape);
   });
 }
 function getSelectionRectangle(start: Point, end: Point): SelectionRectangle {
@@ -93,4 +101,5 @@ function drawSelection(
 
   ctx.strokeStyle = "#4da3ff";
   ctx.lineWidth = 2;
-  ctx.strokeRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);}
+  ctx.strokeRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+}
