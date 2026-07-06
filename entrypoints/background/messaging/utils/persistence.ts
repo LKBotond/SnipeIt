@@ -6,3 +6,7 @@ export async function loadFromLocal<T>(key: string): Promise<T | undefined> {
   const result = await browser.storage.local.get(key);
   return result[key] as Promise<T | undefined>;
 }
+
+export function deleteFromLocal(key: string) {
+  return browser.storage.local.remove(key);
+}

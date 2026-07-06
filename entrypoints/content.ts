@@ -9,12 +9,14 @@ export default defineContentScript({
     const preset = await getShortcut();
     const pressed = new Set<string>();
     let triggered = false;
+    let capturing = false;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       pressed.add(event.code);
       const match = preset.combination.every((key) => pressed.has(key));
-      if (match && !triggered) {
+      if (match && !triggered && !capturing) {
         triggered = true;
+        capturing = true;
         captureScreenshot();
       }
     };
@@ -31,6 +33,7 @@ export default defineContentScript({
       if (selectionRectangle) {
         captureScreen(selectionRectangle);
       }
+      capturing = !capturing;
       removeCanvas();
     };
 

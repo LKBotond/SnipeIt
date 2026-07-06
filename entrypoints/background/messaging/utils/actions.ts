@@ -7,3 +7,4 @@ export const TRANSFORM_IMG = "TRANSFORM_IMG";
 export const UPDATE_LANG = "UPDATE_LANG";
 export const SET_LANG = "SET_LANG";
 export const INITIALIZE = "INITIALIZE";
+export const RESET_SHORTCUT = "RESET_SHORTCUT";

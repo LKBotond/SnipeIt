@@ -3,6 +3,7 @@ import { ShortCut } from "../../popup/app/views/options/capture";
 import {
   GET_SHORTCUT,
   SET_SHORTCUT,
+  RESET_SHORTCUT,
   PROCESS_IMG,
   EXTRACT_TXT,
   EXTRACT_IMG,
@@ -29,6 +30,9 @@ export function getShortcut(): Promise<ShortCut> {
 }
 export function setNewShortcut(shortcut: ShortCut): Promise<ShortCut> {
   return sendMessage({ action: SET_SHORTCUT, payload: shortcut });
+}
+export function resetShortcut(): Promise<ShortCut> {
+  return sendMessage({ action: RESET_SHORTCUT });
 }
 export function updateLanguagePacks(languages: string[]): Promise<void> {
   return sendMessage({ action: UPDATE_LANG, payload: languages });

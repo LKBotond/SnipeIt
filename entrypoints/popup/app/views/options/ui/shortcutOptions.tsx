@@ -3,20 +3,27 @@ import reactLogo from "@/assets/react.svg";
 import wxtLogo from "/wxt.svg";
 import { Typography, Box, Button } from "@mui/material";
 import "@/entrypoints/popup/style/App.css";
-import { captureCombination } from "../capture";
-import { setNewShortcut } from "@/entrypoints/background/messaging/messaging";
-import { BaseViewProps } from "@/entrypoints/popup/app/App";
+import { captureCombination, ShortCut } from "../capture";
+import {
+  resetShortcut,
+  setNewShortcut,
+} from "@/entrypoints/background/messaging/messaging";
+import { BaseSubOptionsProps } from "./options";
 
-interface OptionsViewProps extends BaseViewProps {}
-("");
+interface ShortcutOptionsProps extends BaseSubOptionsProps {
+  shortcut: ShortCut;
+}
 
-function OptionsView(props: OptionsViewProps) {
+function ShortcutOptions(props: ShortcutOptionsProps) {
   const [shortCut, setShortCut] = useState(props.shortcut);
 
   const handleCapture = async () => {
-    const newShortcut = await captureCombination();
+    const newShortcut = await setNewShortcut(await captureCombination());
     setShortCut(newShortcut);
-    await setNewShortcut(newShortcut);
+  };
+  const handleShortcutReset = async () => {
+    const shortcut = await resetShortcut();
+    setShortCut(shortcut);
   };
   const displayShortcut = (): string => {
     return shortCut.combination.join("+");
@@ -24,25 +31,18 @@ function OptionsView(props: OptionsViewProps) {
 
   return (
     <>
-      <Box>
-        <Typography variant="h2">Options</Typography>
+      <Box hidden={props.hidden}>
         <Typography variant="body1">
           You may personalize your shortcuts here
-        </Typography>
-        <Typography>
-          To set your shortcut, just press the button and press and hold down
-          your combination. the capture finishes once you let go of any key
         </Typography>
         <Typography>
           Curent combination:
           {displayShortcut()}
         </Typography>
         <Button onClick={handleCapture}>Set my new shortcut</Button>
-        <Button onClick={() => props.setView("index")}>
-          Get me out of here
-        </Button>
+        <Button onClick={handleShortcutReset}>Reset to default</Button>
       </Box>
     </>
   );
 }
-export default OptionsView;
+export default ShortcutOptions;

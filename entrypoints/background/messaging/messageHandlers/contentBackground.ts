@@ -1,5 +1,10 @@
 import { ShortCut } from "../../../popup/app/views/options/capture";
-import { loadUsersShortCut, loadDefault, saveShortCut } from "../../storage";
+import {
+  loadUsersShortCut,
+  loadDefault,
+  saveShortCut,
+  deleteUserShortcut,
+} from "../../storage";
 import {
   GET_SHORTCUT,
   SET_SHORTCUT,
@@ -20,6 +25,10 @@ interface MessageMap {
   SET_SHORTCUT: {
     payload: ShortCut;
     response: void;
+  };
+  RESET_SHORTCUT: {
+    payload: void;
+    response: ShortCut;
   };
   PROCESS_IMG: {
     payload: SelectionRectangle;
@@ -58,7 +67,10 @@ export const MessageHandler: MessageHandlerMap = {
     console.log("Invoked: ", SET_SHORTCUT);
     return await saveShortCut(payload);
   },
-
+  RESET_SHORTCUT: async () => {
+    await deleteUserShortcut();
+    return loadDefault();
+  },
   PROCESS_IMG: async (payload) => {
     console.log("Invoked: ", PROCESS_IMG);
     return await grabAndExtractViewPort(payload);
