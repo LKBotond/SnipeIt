@@ -3,7 +3,6 @@ import reactLogo from "@/assets/react.svg";
 import wxtLogo from "/wxt.svg";
 import { Typography, Box, Button } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-//import "../style/App.css";
 
 import IndexView from "./views/index";
 import OptionsView from "./views/options/ui/options";

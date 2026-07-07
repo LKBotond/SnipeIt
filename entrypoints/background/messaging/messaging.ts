@@ -11,6 +11,7 @@ import {
   UPDATE_LANG,
   SET_LANG,
   INITIALIZE,
+  GET_LANG,
 } from "./utils/actions";
 
 import {
@@ -36,6 +37,9 @@ export function resetShortcut(): Promise<ShortCut> {
 }
 export function updateLanguagePacks(languages: string[]): Promise<void> {
   return sendMessage({ action: UPDATE_LANG, payload: languages });
+}
+export function getActiveLanguagePacks(): Promise<string[]> {
+  return sendMessage({ action: GET_LANG });
 }
 
 //used in content -> background messaging

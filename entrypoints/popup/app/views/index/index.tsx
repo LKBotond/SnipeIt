@@ -3,7 +3,6 @@ import reactLogo from "@/assets/react.svg";
 import wxtLogo from "/wxt.svg";
 import { Typography, Box, Button } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import "@/entrypoints/popup/style/App.css";
 import { browser } from "wxt/browser";
 import { BaseViewProps } from "../../App";
 
@@ -12,7 +11,7 @@ function IndexView(props: IndexViewProps) {
   const [shortCut, setShortCut] = useState(props.shortcut);
 
   const displayShortcut = (): string => {
-    return shortCut.combination.join("+");
+    return shortCut.combination.join(" + ");
   };
 
   const handleComercial = () => {
@@ -37,14 +36,13 @@ function IndexView(props: IndexViewProps) {
           Lets keep free information free:{")"}
         </Typography>
         <Typography variant="body1">
-          Your current Sniping combination: {displayShortcut()}
+          Your current Sniping combination:{" "}
+          <Typography component="span">{displayShortcut()}</Typography>
         </Typography>
         <Button onClick={() => props.setView("options")}>
           Switch up my combination
         </Button>
-        <Button onClick={handleComercial} startIcon={<StarIcon />}>
-          Give me a ⭐ on GitHub
-        </Button>
+        <Button onClick={handleComercial}>Give me a ⭐ on GitHub</Button>
       </Box>
     </>
   );

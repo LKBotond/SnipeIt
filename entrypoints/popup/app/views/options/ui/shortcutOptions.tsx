@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import reactLogo from "@/assets/react.svg";
 import wxtLogo from "/wxt.svg";
 import { Typography, Box, Button } from "@mui/material";
-import "@/entrypoints/popup/style/App.css";
 import { captureCombination, ShortCut } from "../capture";
 import {
   resetShortcut,
@@ -26,7 +25,7 @@ function ShortcutOptions(props: ShortcutOptionsProps) {
     setShortCut(shortcut);
   };
   const displayShortcut = (): string => {
-    return shortCut.combination.join("+");
+    return shortCut.combination.join(" + ");
   };
 
   return (

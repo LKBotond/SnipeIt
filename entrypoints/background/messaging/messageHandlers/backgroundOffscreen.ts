@@ -3,6 +3,7 @@ import {
   INITIALIZE,
   SET_LANG,
   EXTRACT_IMG,
+  GET_LANG,
 } from "../utils/actions";
 import {
   extractText,
@@ -17,6 +18,7 @@ import {
 import { handleCropping } from "@/entrypoints/offscreen/crop";
 import { fetchAndConvertImg } from "@/entrypoints/offscreen/converter";
 import { handleCopy } from "@/entrypoints/offscreen/copy";
+import { loadUsersLanguagePacks } from "../../storage";
 
 interface OffscreenMessageMap {
   EXTRACT_TXT: {
@@ -30,6 +32,10 @@ interface OffscreenMessageMap {
   SET_LANG: {
     payload: string[];
     response: void;
+  };
+  GET_LANG: {
+    payload: void;
+    response: string[];
   };
   INITIALIZE: {
     payload: string[];
@@ -54,6 +60,12 @@ export const OffscreenMessageHandler: OffscreenMessageHandlerMap = {
   SET_LANG: async (payload) => {
     console.log("Invoked: ", SET_LANG);
     await updateLangPreferences(payload);
+  },
+  GET_LANG: async () => {
+    console.log("Invoked: ", GET_LANG);
+    let languagePacks = await loadUsersLanguagePacks();
+    if (!languagePacks) languagePacks = ["eng"];
+    return languagePacks;
   },
   EXTRACT_TXT: async (payload) => {
     console.log("Invoked: ", EXTRACT_TXT);

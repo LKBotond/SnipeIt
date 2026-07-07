@@ -9,14 +9,20 @@ import {
   ToggleButtonGroup,
   Button,
 } from "@mui/material";
-import "@/entrypoints/popup/style/App.css";
 import { BaseSubOptionsProps } from "./options";
-import { updateLanguagePacks } from "@/entrypoints/background/messaging/messaging";
+import {
+  getActiveLanguagePacks,
+  updateLanguagePacks,
+} from "@/entrypoints/background/messaging/messaging";
 interface LangOptionsProps extends BaseSubOptionsProps {}
 
 function LanguageOptions(props: LangOptionsProps) {
   const [languages, setLanguages] = useState<string[]>([]);
 
+  const handleGetActiveLanguagePacks = async () => {
+    const activePacks = await getActiveLanguagePacks();
+    setLanguages(activePacks);
+  };
   const handleSelectionSaving = async () => {
     await updateLanguagePacks(languages);
   };
@@ -27,11 +33,6 @@ function LanguageOptions(props: LangOptionsProps) {
         <ToggleButtonGroup
           value={languages}
           onChange={(_, newLanguages) => setLanguages(newLanguages)}
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 1,
-          }}
         >
           {EUROPEAN_LANGUAGES.map((lang) => (
             <ToggleButton key={lang.code} value={lang.code}>

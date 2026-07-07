@@ -1,36 +1,46 @@
+import { Padding } from "@mui/icons-material";
 import { createTheme } from "@mui/material/styles";
 
-// 1. Define the base theme (palette, typography, etc.)
-const themeBase = createTheme({
+export const theme = createTheme({
   palette: {
-    primary: { main: "#95959f" },
-    secondary: { main: "#5e5d62" },
-    error: { main: "#d32f2f" },
-    warning: { main: "#ed6c02" },
-    info: { main: "#494be7" },
-    success: { main: "#2e7d32" },
-    background: { default: "#19191b" },
+    mode: "dark",
   },
   typography: {
     fontFamily: "Inter, Arial, sans-serif",
   },
-});
-
-export const theme = createTheme(themeBase, {
   components: {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: themeBase.palette.background.default,
+          maxWidth: "20rem",
+          margin: "0 auto",
+          padding: "1rem",
+          width: "100%",
+        },
+      },
+    },
+    MuiToggleButtonGroup: {
+      styleOverrides: {
+        root: {
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
+          gap: "8px",
+          width: "100%",
+        },
+      },
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          flex: 1,
+          textTransform: "none",
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          color: themeBase.palette.primary.main,
-          textTransform: "none",
-          borderRadius: 12,
+          width: "100%",
         },
       },
     },
