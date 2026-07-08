@@ -16,7 +16,7 @@ export default defineBackground(() => {
     const action = message?.action;
     const handler = MessageHandler[action as keyof typeof MessageHandler];
     if (handler) {
-      Promise.resolve((handler as any)(message.payload, sender))
+      Promise.resolve((handler as any)(message.payload))
         .then((result) => {
           sendResponse(result);
         })

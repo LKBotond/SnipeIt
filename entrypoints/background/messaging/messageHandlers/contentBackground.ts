@@ -55,7 +55,6 @@ interface MessageMap {
 type MessageHandlerMap = {
   [K in keyof MessageMap]: (
     payload: MessageMap[K]["payload"],
-    sender?: Browser.runtime.MessageSender,
   ) => Promise<MessageMap[K]["response"]> | MessageMap[K]["response"];
 };
 

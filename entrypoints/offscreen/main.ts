@@ -9,7 +9,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const handler =
     OffscreenMessageHandler[action as keyof typeof OffscreenMessageHandler];
   if (handler) {
-    Promise.resolve(handler(message.payload, sender))
+    Promise.resolve(handler(message.payload))
       .then((result) => sendResponse(result))
       .catch((error) => {
         console.log(error);

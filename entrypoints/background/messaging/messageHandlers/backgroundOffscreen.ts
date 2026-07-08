@@ -40,7 +40,6 @@ interface OffscreenMessageMap {
 type OffscreenMessageHandlerMap = {
   [K in keyof OffscreenMessageMap]: (
     payload: OffscreenMessageMap[K]["payload"],
-    sender?: Browser.runtime.MessageSender,
   ) =>
     | Promise<OffscreenMessageMap[K]["response"]>
     | OffscreenMessageMap[K]["response"];
