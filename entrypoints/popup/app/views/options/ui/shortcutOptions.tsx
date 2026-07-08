@@ -17,7 +17,10 @@ function ShortcutOptions(props: ShortcutOptionsProps) {
   const [shortCut, setShortCut] = useState(props.shortcut);
 
   const handleCapture = async () => {
-    const newShortcut = await setNewShortcut(await captureCombination());
+    const combination = await captureCombination();
+    console.log("captured combination, ", combination);
+    const newShortcut = await setNewShortcut(combination);
+console.log("captured shortcut, ", newShortcut);
     setShortCut(newShortcut);
   };
   const handleShortcutReset = async () => {

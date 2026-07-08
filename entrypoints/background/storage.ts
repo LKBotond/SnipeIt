@@ -24,3 +24,6 @@ export function loadUsersShortCut(): Promise<ShortCut | undefined> {
 export function loadUsersLanguagePacks(): Promise<string[] | undefined> {
   return loadFromLocal("languagePacks");
 }
+export function saveUserLanguagePacks(languagePacks: string[]) {
+  return saveToLocal("languagePacks", languagePacks);
+}

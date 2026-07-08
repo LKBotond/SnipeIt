@@ -4,6 +4,8 @@ import {
   loadDefault,
   saveShortCut,
   deleteUserShortcut,
+  loadUsersLanguagePacks,
+  saveUserLanguagePacks,
 } from "../../storage";
 import {
   GET_SHORTCUT,
@@ -11,6 +13,8 @@ import {
   PROCESS_IMG,
   TRANSFORM_IMG,
   UPDATE_LANG,
+  GET_LANG,
+  RESET_SHORTCUT,
 } from "../utils/actions";
 import { extractImg, setLanguages, updateLanguagePacks } from "../messaging";
 import { ImageExtractionRequest } from "../utils/commonInterfaces";
@@ -24,7 +28,7 @@ interface MessageMap {
   };
   SET_SHORTCUT: {
     payload: ShortCut;
-    response: void;
+    response: ShortCut;
   };
   RESET_SHORTCUT: {
     payload: void;
@@ -41,6 +45,10 @@ interface MessageMap {
   UPDATE_LANG: {
     payload: string[];
     response: void;
+  };
+  GET_LANG: {
+    payload: void;
+    response: string[];
   };
 }
 
@@ -65,9 +73,15 @@ export const MessageHandler: MessageHandlerMap = {
 
   SET_SHORTCUT: async (payload) => {
     console.log("Invoked: ", SET_SHORTCUT);
-    return await saveShortCut(payload);
+    await saveShortCut(payload);
+    const loaded = await loadUsersShortCut();
+    if (!loaded) {
+      throw new Error("Shortcut saving failed");
+    }
+    return loaded;
   },
   RESET_SHORTCUT: async () => {
+    console.log("Invoked: ", RESET_SHORTCUT);
     await deleteUserShortcut();
     return loadDefault();
   },
@@ -81,6 +95,13 @@ export const MessageHandler: MessageHandlerMap = {
   },
   UPDATE_LANG: async (payload) => {
     console.log("invoked: ", UPDATE_LANG);
+    await saveUserLanguagePacks(payload);
     return await setLanguages(payload);
+  },
+  GET_LANG: async () => {
+    console.log("Invoked: ", GET_LANG);
+    let languagePacks = await loadUsersLanguagePacks();
+    if (!languagePacks) languagePacks = ["eng"];
+    return languagePacks;
   },
 };

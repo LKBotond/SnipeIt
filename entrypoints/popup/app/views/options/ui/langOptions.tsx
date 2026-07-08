@@ -18,9 +18,12 @@ interface LangOptionsProps extends BaseSubOptionsProps {}
 
 function LanguageOptions(props: LangOptionsProps) {
   const [languages, setLanguages] = useState<string[]>([]);
-
+  useEffect(() => {
+    handleGetActiveLanguagePacks();
+  },[]);
   const handleGetActiveLanguagePacks = async () => {
     const activePacks = await getActiveLanguagePacks();
+    console.log("active Packs, ",activePacks)
     setLanguages(activePacks);
   };
   const handleSelectionSaving = async () => {
