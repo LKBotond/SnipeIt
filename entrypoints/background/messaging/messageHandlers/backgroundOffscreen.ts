@@ -52,7 +52,6 @@ export const OffscreenMessageHandler: OffscreenMessageHandlerMap = {
   },
   SET_LANG: async (payload) => {
     console.log("Invoked: ", SET_LANG);
-    await 
     await updateLangPreferences(payload);
   },
   EXTRACT_TXT: async (payload) => {

@@ -29,18 +29,17 @@ function IndexView(props: IndexViewProps) {
       <Box>
         <Typography variant="h2">SnipeIt</Typography>
         <Typography variant="body1">
-          Welcome user, this extension will detect extract and paste any text
-          into the clipboard that you snipe with it.
+          Grab any text you see and send it straight to your clipboard.
         </Typography>
         <Typography variant="body1">
-          Lets keep free information free:{")"}
+          Fast. Private. No uploads. Just instant local OCR.
         </Typography>
         <Typography variant="body1">
-          Your current Sniping combination:{" "}
+          Current shortcut:{" "}
           <Typography component="span">{displayShortcut()}</Typography>
         </Typography>
         <Button onClick={() => props.setView("options")}>
-          Switch up my combination
+          Customize Shortcut
         </Button>
         <Button onClick={handleComercial}>Give me a ⭐ on GitHub</Button>
       </Box>

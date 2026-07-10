@@ -27,19 +27,17 @@ function OptionsView(props: OptionsViewProps) {
       <Box>
         <Typography variant="h2">Options</Typography>
         <Typography variant="body1">
-          You may personalize your Sniping here
+          Configure your shortcuts and OCR language packs.
         </Typography>
-        <Button onClick={displayShortcutOptions}>set shortcut options</Button>
+        <Button onClick={displayShortcutOptions}>Keyboard Shortcuts</Button>
         <ShortcutOptions
           hidden={shortcutVisibility}
           shortcut={props.shortcut}
         ></ShortcutOptions>
-        <Button onClick={displayLaanguageOptions}>
-          set Language Preferences
-        </Button>
+        <Button onClick={displayLaanguageOptions}>Language Settings</Button>
         <LanguageOptions hidden={langOptVisibility}></LanguageOptions>
         <Button onClick={() => props.setView("index")}>
-          Get me out of here
+          Back to Home
         </Button>
       </Box>
     </>

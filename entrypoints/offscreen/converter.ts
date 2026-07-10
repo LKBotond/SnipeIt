@@ -1,32 +1,35 @@
 import { getCanvas } from "./crop";
 import { ImageExtractionRequest } from "../background/messaging/utils/commonInterfaces";
-const { canvas, ctx } = getCanvas();
+import { SUPPORTED_FORMATS } from "../popup/app/views/options/formats";
+const { canvas, ctx, formats } = initialize();
 
-function drawImage(img: HTMLImageElement, ctx: CanvasRenderingContext2D) {
-  ctx.drawImage(img, 0, 0);
-}
 export async function fetchAndConvertImg(request: ImageExtractionRequest) {
+  if (!formats.has(request.format)) {
+    console.log("Invalid file format requested");
+    throw new Error("Invalid file format requested" + request.format);
+  }
   const img = await fetchImg(request);
   resizeCanvas(img);
   drawImage(img, ctx);
   return canvas.toDataURL(request.format);
 }
 
-async function fetchImg(
-  request: ImageExtractionRequest,
-): Promise<HTMLImageElement> {
+function fetchImg(request: ImageExtractionRequest): Promise<HTMLImageElement> {
   const img = new Image();
   if (request.img.startsWith("http")) {
     img.crossOrigin = "anonymous";
   }
 
-  await new Promise<void>((resolve, reject) => {
-    img.onload = () => resolve();
-    img.onerror = reject;
+  return new Promise((resolve, reject) => {
+    img.onload = () => resolve(img);
+    img.onerror = img.onerror = () =>
+      reject(new Error(`Failed to load ${request.img}`));
     img.src = request.img;
   });
+}
 
-  return img;
+function drawImage(img: HTMLImageElement, ctx: CanvasRenderingContext2D) {
+  ctx.drawImage(img, 0, 0);
 }
 
 function resizeCanvas(img: HTMLImageElement) {
@@ -34,10 +37,8 @@ function resizeCanvas(img: HTMLImageElement) {
   canvas.height = img.naturalHeight;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
-const supportedFormats = [
-  "image/png",
-  "image/jpg",
-  "image/bmp",
-  "image/avif",
-  "image/webp",
-];
+function initialize() {
+  const { canvas, ctx } = getCanvas();
+  const formats = new Set(SUPPORTED_FORMATS.map((format) => format.mime));
+  return { canvas, ctx, formats };
+}
