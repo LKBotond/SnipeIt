@@ -1,4 +1,5 @@
 import { ShortCut } from "../popup/app/views/options/capture";
+import { Formats } from "../popup/app/views/options/formats";
 import {
   deleteFromLocal,
   loadFromLocal,
@@ -26,4 +27,18 @@ export function loadUsersLanguagePacks(): Promise<string[] | undefined> {
 }
 export function saveUserLanguagePacks(languagePacks: string[]) {
   return saveToLocal("languagePacks", languagePacks);
+}
+export function loadDefaultFormat():Formats[] {
+  return [{name:"png",mime:"image/png"}]
+}
+
+export function saveUserFormats(formats: string[]) {
+  return saveToLocal("userFormats", formats)
+}
+
+export function deleteUserFormats() {
+  return deleteFromLocal("userFormats")
+}
+export function loadUserFormats(): Promise<Formats[] | undefined> {
+  return loadFromLocal("userFormats")
 }
