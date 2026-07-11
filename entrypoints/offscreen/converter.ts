@@ -2,7 +2,7 @@ import { getCanvas } from "./crop";
 import { ImageExtractionRequest } from "../background/messaging/utils/commonInterfaces";
 import { SUPPORTED_FORMATS } from "../popup/app/views/options/formats";
 const { canvas, ctx, formats } = initialize();
-
+//need to rework this so it returns the format dinamically
 export async function fetchAndConvertImg(request: ImageExtractionRequest) {
   if (!formats.has(request.format)) {
     console.log("Invalid file format requested");

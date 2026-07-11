@@ -43,7 +43,7 @@ function LanguageOptions(props: LangOptionsProps) {
             </ToggleButton>
           ))}
         </ToggleButtonGroup>
-        <Button onClick={handleSelectionSaving}>Save Preferences</Button>
+        <Button onClick={handleSelectionSaving}>save selection</Button>
       </Box>
     </>
   );

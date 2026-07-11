@@ -9,20 +9,19 @@ export default defineBackground(() => {
   }).catch((error) => {
     console.error("failed to set up the context menus, ", error)
   })
-  initializeOFfscreen()
-    .then(() => {
-      console.log("Offscreen document checked/set up successfully");
-    })
-    .catch((error) => {
+  initializeOFfscreen().then(() => {
+    console.log("Offscreen document checked/set up successfully");
+  }).catch((error) => {
       console.error("Failed to create offscreen document:", error);
     });
 
-  browser.contextMenus.onClicked.addListener(async (info) => {
-    const converted = await handleConversion(info);
-    browser.downloads.download({ url: converted.dataURL, filename: `converted.${converted.name}` })
-
-  })
-
+  browser.contextMenus.onClicked.addListener((info) => {
+    handleConversion(info).then((converted) => {
+      browser.downloads.download({ url: converted.dataURL, filename: `converted.${converted.name}` })
+    }).catch((error) => {
+      console.error("Failed to convert image, ", error)
+    })
+  });
   browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("Message Received: ", message);
 

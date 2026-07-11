@@ -6,8 +6,11 @@ import { ImageExtractionRequest } from "../messaging/utils/commonInterfaces";
 const id = "snipeIt"
 const title = "Snipe"
 export async function initializeContextMenus() {
-  const userFormats = await handleGetUserFormats()
+  let userFormats = await handleGetUserFormats()
   const names = userFormats.map(format => format.name)
+  if (!userFormats) {
+    userFormats = [{ name: "png:", mime: "image/png" }]
+  }
 
   if (userFormats.length === 1) {
     initializeSingular(userFormats[0].name)
