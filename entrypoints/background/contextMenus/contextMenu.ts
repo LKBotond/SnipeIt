@@ -7,10 +7,10 @@ const id = "snipeIt"
 const title = "Snipe"
 export async function initializeContextMenus() {
   let userFormats = await handleGetUserFormats()
-  const names = userFormats.map(format => format.name)
   if (!userFormats) {
     userFormats = [{ name: "png:", mime: "image/png" }]
   }
+  const names = userFormats.map(format => format.name)
 
   if (userFormats.length === 1) {
     initializeSingular(userFormats[0].name)
