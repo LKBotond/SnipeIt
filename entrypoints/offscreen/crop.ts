@@ -20,6 +20,7 @@ export async function handleCropping(request: TextExtractionRequest) {
     throw error;
   }
 }
+//need to rework the functions to be correctly cropped
 
 export function getCanvas() {
   let canvas = document.querySelector<HTMLCanvasElement>("canvas");

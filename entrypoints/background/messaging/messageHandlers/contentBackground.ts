@@ -36,7 +36,7 @@ interface MessageMap {
   };
   PROCESS_IMG: {
     payload: SelectionRectangle;
-    response: string;
+    response: boolean;
   };
   TRANSFORM_IMG: {
     payload: ImageExtractionRequest;
@@ -86,7 +86,9 @@ export const MessageHandler: MessageHandlerMap = {
   },
   PROCESS_IMG: async (payload) => {
     console.log("Invoked: ", PROCESS_IMG);
-    return await grabAndExtractViewPort(payload);
+    const extracted = await grabAndExtractViewPort(payload);
+    if (extracted) return true;
+    return false;
   },
   TRANSFORM_IMG: async (payload) => {
     console.log("Invoked: ", TRANSFORM_IMG);

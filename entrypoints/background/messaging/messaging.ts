@@ -51,7 +51,7 @@ export function transformImg(payload: ImageExtractionRequest): Promise<string> {
   return sendMessage({ action: TRANSFORM_IMG, payload: payload });
 }
 
-export function captureScreen(payload: SelectionRectangle) {
+export function captureScreen(payload: SelectionRectangle):Promise<Boolean> {
   return sendMessage({ action: PROCESS_IMG, payload: payload });
 }
 

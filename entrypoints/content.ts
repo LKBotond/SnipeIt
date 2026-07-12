@@ -1,8 +1,7 @@
-import { browser } from "wxt/browser";
-import { ShortCut } from "./popup/app/views/options/capture";
 import { handleDrawing } from "./content/drawings";
 import { captureScreen, getShortcut } from "./background/messaging/messaging";
 import { insertCanvas, removeCanvas } from "./content/canvas";
+import { insertLoadingScreen, removeLoadingScreen } from "./content/loadingScreen";
 export default defineContentScript({
   matches: ["*://*/*"],
   async main() {
@@ -30,13 +29,16 @@ export default defineContentScript({
     const captureScreenshot = async () => {
       const { canvas, ctx } = insertCanvas();
       let selectionRectangle = await handleDrawing(canvas, ctx);
-      if (selectionRectangle) {
-        captureScreen(selectionRectangle);
+      if (!selectionRectangle) {
+        removeCanvas()
+        return;
       }
-      capturing = !capturing;
+      insertLoadingScreen()
       removeCanvas();
+      const success = await captureScreen(selectionRectangle);
+      if (success) removeLoadingScreen()
+      capturing = !capturing;
     };
-
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
   },
