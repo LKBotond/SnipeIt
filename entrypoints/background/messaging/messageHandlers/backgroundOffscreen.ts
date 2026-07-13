@@ -64,6 +64,7 @@ export const OffscreenMessageHandler: OffscreenMessageHandlerMap = {
   },
   EXTRACT_IMG: async (payload) => {
     console.log("Invoked: ", EXTRACT_IMG);
+    console.log("got payload: ", payload);
     return await fetchAndConvertImg(payload);
   },
 };

@@ -1,26 +1,40 @@
 import { browser } from "wxt/browser";
 import { MessageHandler } from "./background/messaging/messageHandlers/contentBackground";
 import { initializeOFfscreen } from "./background/osLifecycle";
-import { handleConversion, initializeContextMenus } from "./background/contextMenus/contextMenu";
+import {
+  handleConversion,
+  initializeContextMenus,
+} from "./background/contextMenus/contextMenu";
 
 export default defineBackground(() => {
-  initializeContextMenus().then(() => {
-    console.log("context menus initialized")
-  }).catch((error) => {
-    console.error("failed to set up the context menus, ", error)
-  })
-  initializeOFfscreen().then(() => {
-    console.log("Offscreen document checked/set up successfully");
-  }).catch((error) => {
+  initializeContextMenus()
+    .then(() => {
+      console.log("context menus initialized");
+    })
+    .catch((error) => {
+      console.error("failed to set up the context menus, ", error);
+    });
+  initializeOFfscreen()
+    .then(() => {
+      console.log("Offscreen document checked/set up successfully");
+    })
+    .catch((error) => {
       console.error("Failed to create offscreen document:", error);
     });
 
   browser.contextMenus.onClicked.addListener((info) => {
-    handleConversion(info).then((converted) => {
-      browser.downloads.download({ url: converted.dataURL, filename: `converted.${converted.name}` })
-    }).catch((error) => {
-      console.error("Failed to convert image, ", error)
-    })
+    handleConversion(info)
+      .then((converted) => {
+        console.log("conversion results: ", converted);
+        browser.downloads.download({
+          url: converted.dataURL,
+          filename: `converted.${converted.name}`,
+          saveAs: true,
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to convert image, ", error);
+      });
   });
   browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("Message Received: ", message);
