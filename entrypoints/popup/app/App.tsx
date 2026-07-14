@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
-import reactLogo from "@/assets/react.svg";
-import wxtLogo from "/wxt.svg";
-import { Typography, Box, Button } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
-
+import {Box } from "@mui/material";
+import "@/entrypoints/popup/style/styles.css";
 import IndexView from "./views/index";
 import OptionsView from "./views/options/ui/options";
 import { getShortcut } from "@/entrypoints/background/messaging/messaging";
