@@ -20,7 +20,6 @@ export async function handleCropping(request: TextExtractionRequest) {
     throw error;
   }
 }
-//need to rework the functions to be correctly cropped
 
 export function getCanvas() {
   let canvas = document.querySelector<HTMLCanvasElement>("canvas");
@@ -43,11 +42,9 @@ export function extractImgAs(canvas: HTMLCanvasElement, format: string) {
 async function decodeImage(base64Data: string) {
   console.log("Input string length:", base64Data.length);
 
-  // 1. Convert base64 to Blob
-  // Split the data URL (e.g., "data:image/jpeg;base64,....")
-  const [header, base64] = base64Data.split(',');
-  const contentType = header.split(':')[1].split(';')[0];
-  
+  const [header, base64] = base64Data.split(",");
+  const contentType = header.split(":")[1].split(";")[0];
+
   const byteCharacters = atob(base64);
   const byteNumbers = new Uint8Array(byteCharacters.length);
   for (let i = 0; i < byteCharacters.length; i++) {
@@ -55,25 +52,22 @@ async function decodeImage(base64Data: string) {
   }
   const blob = new Blob([byteNumbers], { type: contentType });
 
-  // 2. Create a Blob URL
   const blobUrl = URL.createObjectURL(blob);
   console.log("Created Blob URL:", blobUrl);
 
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
-    
+
     image.onload = () => {
-      // 3. IMPORTANT: Revoke the URL to free memory
       URL.revokeObjectURL(blobUrl);
       resolve(image);
     };
-    
+
     image.onerror = (e) => {
       URL.revokeObjectURL(blobUrl);
       reject(new Error("Failed to load Blob URL"));
     };
-    
-    // Assign the small Blob URL instead of the massive base64 string
+
     image.src = blobUrl;
   });
 }
@@ -83,21 +77,22 @@ function cropAndDrawImage(
   image: HTMLImageElement,
   cropRectangle: SelectionRectangle,
 ) {
-  ctx.canvas.width = cropRectangle.width;
-  ctx.canvas.height = cropRectangle.height;
+  const { x, y, width, height } = scaleToDpr(cropRectangle);
+  ctx.canvas.width = width;
+  ctx.canvas.height = height;
 
-  ctx.drawImage(
-    image,
-    cropRectangle.x,
-    cropRectangle.y,
-    cropRectangle.width,
-    cropRectangle.height,
-    0,
-    0,
-    cropRectangle.width,
-    cropRectangle.height,
-  );
+  ctx.drawImage(image, x, y, width, height, 0, 0, width, height);
 }
+
+function scaleToDpr(cropRectangle: SelectionRectangle) {
+  const dpr = cropRectangle.dpr;
+  const x = cropRectangle.x * dpr;
+  const y = cropRectangle.y * dpr;
+  const width = cropRectangle.width * dpr;
+  const height = cropRectangle.height * dpr;
+  return { x, y, width, height };
+}
+
 function extractImgAsPNG(canvas: HTMLCanvasElement) {
   return canvas.toDataURL("image/png");
 }

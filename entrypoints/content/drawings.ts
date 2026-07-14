@@ -7,6 +7,7 @@ export interface SelectionRectangle {
   y: number;
   width: number;
   height: number;
+  dpr: number;
 }
 export function handleDrawing(
   canvas: HTMLCanvasElement,
@@ -77,6 +78,7 @@ function getSelectionRectangle(start: Point, end: Point): SelectionRectangle {
     y: Math.min(start.y, end.y),
     width: Math.abs(end.x - start.x),
     height: Math.abs(end.y - start.y),
+    dpr: window.devicePixelRatio,
   };
 }
 
