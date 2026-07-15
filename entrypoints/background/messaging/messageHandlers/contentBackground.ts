@@ -74,7 +74,7 @@ type MessageHandlerMap = {
 
 export const MessageHandler: MessageHandlerMap = {
   GET_SHORTCUT: async () => {
-    console.log("Invoked: ", GET_SHORTCUT);
+    console.debug("Invoked: ", GET_SHORTCUT);
     const userSpecific = await loadUsersShortCut();
     if (!userSpecific) {
       const defaultSet = loadDefault();
@@ -85,7 +85,7 @@ export const MessageHandler: MessageHandlerMap = {
   },
 
   SET_SHORTCUT: async (payload) => {
-    console.log("Invoked: ", SET_SHORTCUT);
+    console.debug("Invoked: ", SET_SHORTCUT);
     await saveShortCut(payload);
     const loaded = await loadUsersShortCut();
     if (!loaded) {

@@ -5,7 +5,7 @@ import {
   loadUserFormats,
   saveUserFormats,
 } from "../storage";
-import { SUPPORTED_FORMATS } from "../../popup/app/views/options/formats";
+import { Formats, SUPPORTED_FORMATS } from "../../popup/app/views/options/formats";
 import { extractImg, processImage } from "../messaging/messaging";
 import { ImageExtractionRequest } from "../messaging/utils/commonInterfaces";
 const id = "snipeIt";
@@ -33,7 +33,7 @@ async function handleGetUserFormats() {
 }
 export async function handleContextUpdate(
   oldFormats: string[],
-  newFormats: string[],
+  newFormats: Formats[],
 ) {
   await demountContext(oldFormats);
   await deleteUserFormats();
@@ -43,17 +43,17 @@ export async function handleContextUpdate(
 export async function handleConversion(info: Browser.contextMenus.OnClickData) {
   const { name, url } = extractContextData(info);
   const format = SUPPORTED_FORMATS.find((format) => {
-    console.log("checking for format: ", format);
+    console.debug("checking for format: ", format);
     return format.name === name;
   });
-  console.log("Supported Formats: ", SUPPORTED_FORMATS);
-  console.log("url: ", url);
-  console.log("name: ", name);
-  console.log("format: ", format);
+  console.debug("Supported Formats: ", SUPPORTED_FORMATS);
+  console.debug("url: ", url);
+  console.debug("name: ", name);
+  console.debug("format: ", format);
   if (!url || !name || !format)
     throw new Error("Image data inexistent or corrupted");
   const dataURL = await extractImg({ img: url, format: format.mime });
-  console.log("extracted DataURL: ", dataURL);
+  console.debug("extracted DataURL: ", dataURL);
   return { name, dataURL };
 }
 async function demountContext(oldFormats: string[]) {

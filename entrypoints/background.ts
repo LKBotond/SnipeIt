@@ -9,14 +9,14 @@ import {
 export default defineBackground(() => {
   initializeContextMenus()
     .then(() => {
-      console.log("context menus initialized");
+      console.debug("context menus initialized");
     })
     .catch((error) => {
       console.error("failed to set up the context menus, ", error);
     });
   initializeOFfscreen()
     .then(() => {
-      console.log("Offscreen document checked/set up successfully");
+      console.debug("Offscreen document checked/set up successfully");
     })
     .catch((error) => {
       console.error("Failed to create offscreen document:", error);
@@ -25,7 +25,7 @@ export default defineBackground(() => {
   browser.contextMenus.onClicked.addListener((info) => {
     handleConversion(info)
       .then((converted) => {
-        console.log("conversion results: ", converted);
+        console.debug("conversion results: ", converted);
         browser.downloads.download({
           url: converted.dataURL,
           filename: `converted.${converted.name}`,
@@ -37,7 +37,7 @@ export default defineBackground(() => {
       });
   });
   browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    console.log("Message Received: ", message);
+    console.debug("Message Received: ", message);
 
     const action = message?.action;
     const handler = MessageHandler[action as keyof typeof MessageHandler];

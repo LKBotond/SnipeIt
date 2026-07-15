@@ -24,7 +24,7 @@ function formatOptions(props: FormatOptionsProps) {
 
   const handleGetActiveFormats = async () => {
     const activeFormats = await getActiveFormats();
-    console.log("active Formats, ", activeFormats);
+    console.debug("active Formats, ", activeFormats);
     setFormats(activeFormats);
   };
 

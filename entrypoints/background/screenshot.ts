@@ -9,7 +9,7 @@ export async function grabAndExtractViewPort(
   selectionRectangle: SelectionRectangle,
 ) {
   const img = await grabViewPort();
-  console.log("img captured: ", img);
+  console.debug("img captured: ", img);
   return extractText({ img, selectionRectangle });
 }
 

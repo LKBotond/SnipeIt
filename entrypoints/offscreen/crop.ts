@@ -4,16 +4,16 @@ import { SelectionRectangle } from "../content/drawings";
 export async function handleCropping(request: TextExtractionRequest) {
   try {
     const { canvas, ctx } = getCanvas();
-    console.log("canvas found", canvas);
+    console.debug("canvas found", canvas);
 
     const img = await decodeImage(request.img);
-    console.log("image Decoded: ", img);
+    console.debug("image Decoded: ", img);
 
     cropAndDrawImage(ctx, img, request.selectionRectangle);
-    console.log("Cropped: ", img);
+    console.debug("Cropped: ", img);
 
     const cropped = extractImgAsPNG(canvas);
-    console.log("Extracted: ", cropped);
+    console.debug("Extracted: ", cropped);
     return cropped;
   } catch (error) {
     console.error("Error in handleCropping:", error);
@@ -40,7 +40,7 @@ export function extractImgAs(canvas: HTMLCanvasElement, format: string) {
 }
 
 async function decodeImage(base64Data: string) {
-  console.log("Input string length:", base64Data.length);
+  console.debug("Input string length:", base64Data.length);
 
   const [header, base64] = base64Data.split(",");
   const contentType = header.split(":")[1].split(";")[0];
@@ -53,7 +53,7 @@ async function decodeImage(base64Data: string) {
   const blob = new Blob([byteNumbers], { type: contentType });
 
   const blobUrl = URL.createObjectURL(blob);
-  console.log("Created Blob URL:", blobUrl);
+  console.debug("Created Blob URL:", blobUrl);
 
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();

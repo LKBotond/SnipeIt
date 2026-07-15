@@ -12,7 +12,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     Promise.resolve(handler(message.payload))
       .then((result) => sendResponse(result))
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         sendResponse(undefined);
       });
   }

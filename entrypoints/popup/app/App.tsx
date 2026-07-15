@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     async function handleRecords() {
       const records = await getShortcut();
-      console.log("gotRecords: ", records);
+      console.debug("gotRecords: ", records);
       setShortCut(records);
     }
     handleRecords();
