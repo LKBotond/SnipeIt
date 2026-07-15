@@ -6,6 +6,9 @@ import {
   deleteUserShortcut,
   loadUsersLanguagePacks,
   saveUserLanguagePacks,
+  loadUserFormats,
+  loadDefaultFormat,
+  saveUserFormats,
 } from "../../storage";
 import {
   GET_SHORTCUT,
@@ -15,11 +18,14 @@ import {
   UPDATE_LANG,
   GET_LANG,
   RESET_SHORTCUT,
+  GET_FORMATS,
+  SET_FORMATS,
 } from "../utils/actions";
 import { extractImg, setLanguages, updateLanguagePacks } from "../messaging";
 import { ImageExtractionRequest } from "../utils/commonInterfaces";
 import { grabAndExtractViewPort } from "../../screenshot";
 import { SelectionRectangle } from "@/entrypoints/content/drawings";
+import { Formats } from "@/entrypoints/popup/app/views/options/formats";
 
 interface MessageMap {
   GET_SHORTCUT: {
@@ -49,6 +55,14 @@ interface MessageMap {
   GET_LANG: {
     payload: void;
     response: string[];
+  };
+  GET_FORMATS: {
+    payload: void;
+    response: Formats[];
+  };
+  SET_FORMATS: {
+    payload: Formats[];
+    response: void;
   };
 }
 
@@ -80,29 +94,41 @@ export const MessageHandler: MessageHandlerMap = {
     return loaded;
   },
   RESET_SHORTCUT: async () => {
-    console.log("Invoked: ", RESET_SHORTCUT);
+    console.debug("Invoked: ", RESET_SHORTCUT);
     await deleteUserShortcut();
     return loadDefault();
   },
   PROCESS_IMG: async (payload) => {
-    console.log("Invoked: ", PROCESS_IMG);
+    console.debug("Invoked: ", PROCESS_IMG);
     const extracted = await grabAndExtractViewPort(payload);
     if (extracted) return true;
     return false;
   },
   TRANSFORM_IMG: async (payload) => {
-    console.log("Invoked: ", TRANSFORM_IMG);
+    console.debug("Invoked: ", TRANSFORM_IMG);
     return await extractImg(payload);
   },
   UPDATE_LANG: async (payload) => {
-    console.log("invoked: ", UPDATE_LANG);
+    console.debug("invoked: ", UPDATE_LANG);
     await saveUserLanguagePacks(payload);
-    return await setLanguages(payload);
+    return setLanguages(payload);
   },
   GET_LANG: async () => {
-    console.log("Invoked: ", GET_LANG);
+    console.debug("Invoked: ", GET_LANG);
     let languagePacks = await loadUsersLanguagePacks();
     if (!languagePacks) languagePacks = ["eng"];
     return languagePacks;
+  },
+  GET_FORMATS: async () => {
+    console.debug("invoked: ", GET_FORMATS);
+    let formats = await loadUserFormats();
+    if (!formats) {
+      formats = loadDefaultFormat();
+    }
+    return formats;
+  },
+  SET_FORMATS: async (payload) => {
+    console.debug("invoked: ", SET_FORMATS);
+    return saveUserFormats(payload);
   },
 };

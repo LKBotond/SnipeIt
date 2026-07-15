@@ -8,6 +8,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { BaseSubOptionsProps } from "./options";
 import {
@@ -18,17 +19,43 @@ interface LangOptionsProps extends BaseSubOptionsProps {}
 
 function LanguageOptions(props: LangOptionsProps) {
   const [languages, setLanguages] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     handleGetActiveLanguagePacks();
   }, []);
+
   const handleGetActiveLanguagePacks = async () => {
-    const activePacks = await getActiveLanguagePacks();
-    console.log("active Packs, ", activePacks);
-    setLanguages(activePacks);
+    setLoading(true);
+    try {
+      const activePacks = await getActiveLanguagePacks();
+      console.debug("active Packs, ", activePacks);
+      setLanguages(activePacks);
+    } catch (error) {
+      console.error("failed to fetch language packs: ", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
   const handleSelectionSaving = async () => {
-    await updateLanguagePacks(languages);
+    setLoading(true);
+    try {
+      const success = await updateLanguagePacks(languages);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <Box className="loading-screen">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <>
       <Box hidden={props.hidden}>

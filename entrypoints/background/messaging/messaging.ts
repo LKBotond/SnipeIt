@@ -12,12 +12,15 @@ import {
   SET_LANG,
   INITIALIZE,
   GET_LANG,
+  GET_FORMATS,
+  SET_FORMATS,
 } from "./utils/actions";
 
 import {
   TextExtractionRequest,
   ImageExtractionRequest,
 } from "./utils/commonInterfaces";
+import { Formats } from "@/entrypoints/popup/app/views/options/formats";
 
 function sendMessage<T_Message, T_Response>(
   message: T_Message,
@@ -41,6 +44,12 @@ export function updateLanguagePacks(languages: string[]): Promise<void> {
 export function getActiveLanguagePacks(): Promise<string[]> {
   return sendMessage({ action: GET_LANG });
 }
+export function getActiveFormats(): Promise<Formats[]> {
+  return sendMessage({ action: GET_FORMATS });
+}
+export function updateActiveFormats(newFormats: Formats[]): Promise<void> {
+  return sendMessage({ action: SET_FORMATS, newFormats });
+}
 
 //used in content -> background messaging
 export function processImage(payload: TextExtractionRequest): Promise<string> {
@@ -51,7 +60,7 @@ export function transformImg(payload: ImageExtractionRequest): Promise<string> {
   return sendMessage({ action: TRANSFORM_IMG, payload });
 }
 
-export function captureScreen(payload: SelectionRectangle): Promise<Boolean> {
+export function captureScreen(payload: SelectionRectangle): Promise<void> {
   return sendMessage({ action: PROCESS_IMG, payload });
 }
 

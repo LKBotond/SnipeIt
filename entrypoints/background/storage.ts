@@ -32,7 +32,7 @@ export function loadDefaultFormat():Formats[] {
   return [{name:"png",mime:"image/png"}]
 }
 
-export function saveUserFormats(formats: string[]) {
+export function saveUserFormats(formats: Formats[]) {
   return saveToLocal("userFormats", formats)
 }
 

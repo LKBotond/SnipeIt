@@ -46,25 +46,25 @@ type OffscreenMessageHandlerMap = {
 };
 export const OffscreenMessageHandler: OffscreenMessageHandlerMap = {
   INITIALIZE: async (payload) => {
-    console.log("Invoked: ", INITIALIZE);
+    console.debug("Invoked: ", INITIALIZE);
     setLanguagePacks(payload);
     return await initializeWorker();
   },
   SET_LANG: async (payload) => {
-    console.log("Invoked: ", SET_LANG);
+    console.debug("Invoked: ", SET_LANG);
     await updateLangPreferences(payload);
   },
   EXTRACT_TXT: async (payload) => {
-    console.log("Invoked: ", EXTRACT_TXT);
-    console.log("got payload: ", payload);
+    console.debug("Invoked: ", EXTRACT_TXT);
+    console.debug("got payload: ", payload);
     const text = await extractText(await handleCropping(payload));
-    console.log("found text: ", text);
+    console.debug("found text: ", text);
     handleCopy(text);
     return text;
   },
   EXTRACT_IMG: async (payload) => {
-    console.log("Invoked: ", EXTRACT_IMG);
-    console.log("got payload: ", payload);
+    console.debug("Invoked: ", EXTRACT_IMG);
+    console.debug("got payload: ", payload);
     return await fetchAndConvertImg(payload);
   },
 };
