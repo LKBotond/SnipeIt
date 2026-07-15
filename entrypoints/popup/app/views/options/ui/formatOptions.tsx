@@ -19,17 +19,30 @@ function formatOptions(props: FormatOptionsProps) {
 
   useEffect(() => {
     handleGetActiveFormats();
-    setLoading(false);
   }, []);
 
   const handleGetActiveFormats = async () => {
-    const activeFormats = await getActiveFormats();
-    console.debug("active Formats, ", activeFormats);
-    setFormats(activeFormats);
+    setLoading(true);
+    try {
+      const activeFormats = await getActiveFormats();
+      console.debug("active Formats, ", activeFormats);
+      setFormats(activeFormats);
+    } catch (error) {
+      console.error("failed to fetch active formats: ", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSelectionSaving = async () => {
-    await updateActiveFormats(formats);
+    setLoading(true);
+    try {
+      await updateActiveFormats(formats);
+    } catch (error) {
+      console.error("failed to update format options: ", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {

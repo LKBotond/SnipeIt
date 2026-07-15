@@ -41,8 +41,9 @@ function LanguageOptions(props: LangOptionsProps) {
   const handleSelectionSaving = async () => {
     setLoading(true);
     try {
-      const success = await updateLanguagePacks(languages);
+      await updateLanguagePacks(languages);
     } catch (error) {
+      console.error("failed to update language Packs: ", error);
     } finally {
       setLoading(false);
     }
