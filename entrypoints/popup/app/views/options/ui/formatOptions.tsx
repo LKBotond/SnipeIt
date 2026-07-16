@@ -13,7 +13,8 @@ import {
   updateActiveFormats,
 } from "@/entrypoints/background/messaging/messaging";
 interface FormatOptionsProps extends BaseSubOptionsProps {}
-function formatOptions(props: FormatOptionsProps) {
+
+function FormatOptions(props: FormatOptionsProps) {
   const [formats, setFormats] = useState<Formats[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,6 +38,8 @@ function formatOptions(props: FormatOptionsProps) {
   const handleSelectionSaving = async () => {
     setLoading(true);
     try {
+      //need to look up why this winds up undefined in the backgroundscript
+      console.debug("formats to be saved: ", formats);
       await updateActiveFormats(formats);
     } catch (error) {
       console.error("failed to update format options: ", error);
@@ -56,16 +59,23 @@ function formatOptions(props: FormatOptionsProps) {
   return (
     <>
       <Box hidden={props.hidden}>
-        <Typography variant="h2">Format options</Typography>
+        <Typography variant="h3">Format options</Typography>
         <Typography variant="body1">
           select the file formats that you want to show up in the context menu
         </Typography>
         <ToggleButtonGroup
-          value={formats}
-          onChange={(_, newFormats) => setFormats(newFormats)}
+          value={formats.map((f) => f.name)}
+          onChange={(_, newNames: string[]) => {
+            const selectedObjects = SUPPORTED_FORMATS.filter((f) =>
+              newNames.includes(f.name),
+            );
+            setFormats(selectedObjects);
+          }}
         >
           {SUPPORTED_FORMATS.map((format) => (
-            <ToggleButton key={format.name} value={format.mime}></ToggleButton>
+            <ToggleButton key={format.name} value={format.name}>
+              {format.name}
+            </ToggleButton>
           ))}
         </ToggleButtonGroup>
         <Button className="floating-sticky" onClick={handleSelectionSaving}>
@@ -75,4 +85,4 @@ function formatOptions(props: FormatOptionsProps) {
     </>
   );
 }
-export default formatOptions;
+export default FormatOptions;

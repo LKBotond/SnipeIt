@@ -60,7 +60,7 @@ function LanguageOptions(props: LangOptionsProps) {
   return (
     <>
       <Box hidden={props.hidden}>
-        <Typography variant="h2">Languages</Typography>
+        <Typography variant="h3">Languages</Typography>
         <ToggleButtonGroup
           value={languages}
           onChange={(_, newLanguages) => setLanguages(newLanguages)}

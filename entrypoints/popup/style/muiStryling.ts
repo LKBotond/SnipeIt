@@ -11,7 +11,7 @@ export const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          maxWidth: "20rem",
+          maxWidth: "30rem",
           margin: "0 auto",
           padding: "1rem",
           width: "100%",
@@ -22,8 +22,8 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
-          gap: "8px",
+          gridTemplateColumns: "repeat(auto-fill, minmax(6rem, 1fr))",
+          gap: "0.5rem",
           width: "100%",
         },
       },

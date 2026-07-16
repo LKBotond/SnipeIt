@@ -33,13 +33,13 @@ export function getShortcut(): Promise<ShortCut> {
   return sendMessage({ action: GET_SHORTCUT });
 }
 export function setNewShortcut(shortcut: ShortCut): Promise<ShortCut> {
-  return sendMessage({ action: SET_SHORTCUT, shortcut });
+  return sendMessage({ action: SET_SHORTCUT, payload: shortcut });
 }
 export function resetShortcut(): Promise<ShortCut> {
   return sendMessage({ action: RESET_SHORTCUT });
 }
 export function updateLanguagePacks(languages: string[]): Promise<void> {
-  return sendMessage({ action: UPDATE_LANG, languages });
+  return sendMessage({ action: UPDATE_LANG, payload: languages });
 }
 export function getActiveLanguagePacks(): Promise<string[]> {
   return sendMessage({ action: GET_LANG });
@@ -48,34 +48,42 @@ export function getActiveFormats(): Promise<Formats[]> {
   return sendMessage({ action: GET_FORMATS });
 }
 export function updateActiveFormats(newFormats: Formats[]): Promise<void> {
-  return sendMessage({ action: SET_FORMATS, newFormats });
+  return sendMessage({ action: SET_FORMATS, payload: newFormats });
 }
 
 //used in content -> background messaging
-export function processImage(payload: TextExtractionRequest): Promise<string> {
-  return sendMessage({ action: PROCESS_IMG, payload });
+export function processImage(
+  textExtractionRequest: TextExtractionRequest,
+): Promise<string> {
+  return sendMessage({ action: PROCESS_IMG, payload: textExtractionRequest });
 }
 
-export function transformImg(payload: ImageExtractionRequest): Promise<string> {
-  return sendMessage({ action: TRANSFORM_IMG, payload });
+export function transformImg(
+  imgExtractionRequest: ImageExtractionRequest,
+): Promise<string> {
+  return sendMessage({ action: TRANSFORM_IMG, payload: imgExtractionRequest });
 }
 
-export function captureScreen(payload: SelectionRectangle): Promise<void> {
-  return sendMessage({ action: PROCESS_IMG, payload });
+export function captureScreen(
+  selectionRectangle: SelectionRectangle,
+): Promise<void> {
+  return sendMessage({ action: PROCESS_IMG, payload: selectionRectangle });
 }
 
 //used in background -> offscreen messaging
 export function extractText(payload: TextExtractionRequest): Promise<string> {
   return sendMessage({ action: EXTRACT_TXT, payload: payload });
 }
-export function extractImg(payload: ImageExtractionRequest): Promise<string> {
-  return sendMessage({ action: EXTRACT_IMG, payload });
+export function extractImg(
+  textExtractionRequest: ImageExtractionRequest,
+): Promise<string> {
+  return sendMessage({ action: EXTRACT_IMG, payload: textExtractionRequest });
 }
 
 export function setLanguages(languages: string[]): Promise<void> {
-  return sendMessage({ action: SET_LANG, languages });
+  return sendMessage({ action: SET_LANG, payload: languages });
 }
 
 export function initializeWorker(languages: string[]): Promise<Boolean> {
-  return sendMessage({ action: INITIALIZE, languages });
+  return sendMessage({ action: INITIALIZE, payload: languages });
 }

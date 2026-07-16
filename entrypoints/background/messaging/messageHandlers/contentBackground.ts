@@ -129,6 +129,7 @@ export const MessageHandler: MessageHandlerMap = {
   },
   SET_FORMATS: async (payload) => {
     console.debug("invoked: ", SET_FORMATS);
+    console.debug("payload: ", payload);
     return saveUserFormats(payload);
   },
 };

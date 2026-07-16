@@ -1,7 +1,10 @@
 import { handleDrawing } from "./content/drawings";
 import { captureScreen, getShortcut } from "./background/messaging/messaging";
 import { insertCanvas, removeCanvas } from "./content/canvas";
-import { insertLoadingScreen, removeLoadingScreen } from "./content/loadingScreen";
+import {
+  insertLoadingScreen,
+  removeLoadingScreen,
+} from "./content/loadingScreen";
 export default defineContentScript({
   matches: ["*://*/*"],
   async main() {
@@ -30,14 +33,20 @@ export default defineContentScript({
       const { canvas, ctx } = insertCanvas();
       let selectionRectangle = await handleDrawing(canvas, ctx);
       if (!selectionRectangle) {
-        removeCanvas()
+        removeCanvas();
+        capturing = !capturing;
         return;
       }
-      insertLoadingScreen()
-      removeCanvas();
-      const success = await captureScreen(selectionRectangle);
-      if (success) removeLoadingScreen()
-      capturing = !capturing;
+      try {
+        insertLoadingScreen();
+        removeCanvas();
+        await captureScreen(selectionRectangle);
+      } catch (error) {
+        console.error("failed to capture the screenshot: ", error);
+      } finally {
+        removeLoadingScreen();
+        capturing = !capturing;
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);

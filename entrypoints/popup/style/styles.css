@@ -1,3 +1,6 @@
+html,body {
+  min-width: 30%;
+}
 .floating-sticky {
   position: sticky;
   bottom: 1rem;
