@@ -38,7 +38,6 @@ function FormatOptions(props: FormatOptionsProps) {
   const handleSelectionSaving = async () => {
     setLoading(true);
     try {
-      //need to look up why this winds up undefined in the backgroundscript
       console.debug("formats to be saved: ", formats);
       await updateActiveFormats(formats);
     } catch (error) {

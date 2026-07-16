@@ -32,7 +32,7 @@ function IndexView(props: IndexViewProps) {
           <Typography component="span">{displayShortcut()}</Typography>
         </Typography>
         <Button onClick={() => props.setView("options")}>
-          Customize Shortcut
+          Options
         </Button>
         <Button onClick={handleComercial}>Give me a ⭐ on GitHub</Button>
       </Box>
