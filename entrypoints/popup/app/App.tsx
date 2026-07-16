@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import {Box } from "@mui/material";
-import "@/entrypoints/popup/style/styles.css";
 import IndexView from "./views/index";
 import OptionsView from "./views/options/ui/options";
 import { getShortcut } from "@/entrypoints/background/messaging/messaging";
 import { ShortCut } from "./views/options/capture";
+import "@/entrypoints/popup/style/styles.css";
 
 export type BaseViewProps = {
   setView: (target: string) => void;

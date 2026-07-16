@@ -5,25 +5,31 @@ import {
   loadUserFormats,
   saveUserFormats,
 } from "../storage";
-import { Formats, SUPPORTED_FORMATS } from "../../popup/app/views/options/formats";
-import { extractImg, processImage } from "../messaging/messaging";
-import { ImageExtractionRequest } from "../messaging/utils/commonInterfaces";
+import {
+  Formats,
+  SUPPORTED_FORMATS,
+} from "../../popup/app/views/options/formats";
+import { extractImg } from "../messaging/messaging";
+
 const id = "snipeIt";
 const title = "Snipe";
+
 export async function initializeContextMenus() {
+  await browser.contextMenus.removeAll();
+
   let userFormats = await handleGetUserFormats();
-  if (!userFormats) {
-    userFormats = [{ name: "png:", mime: "image/png" }];
+  if (!userFormats || userFormats.length === 0) {
+    userFormats = [{ name: "png", mime: "image/png" }];
   }
-  const names = userFormats.map((format) => format.name);
 
   if (userFormats.length === 1) {
-    initializeSingular(userFormats[0].name);
+    initializeSingular(userFormats[0]);
     return;
   }
-  createContextMenu(id);
-  initializeMultiple(names, id);
+
+  initializeMultiple(userFormats, id);
 }
+
 async function handleGetUserFormats() {
   let userFormats = await loadUserFormats();
   if (!userFormats) {
@@ -31,60 +37,57 @@ async function handleGetUserFormats() {
   }
   return userFormats;
 }
-export async function handleContextUpdate(
-  oldFormats: string[],
-  newFormats: Formats[],
-) {
-  await demountContext(oldFormats);
+
+export async function handleContextUpdate(newFormats: Formats[]) {
   await deleteUserFormats();
   await saveUserFormats(newFormats);
   await initializeContextMenus();
 }
+
 export async function handleConversion(info: Browser.contextMenus.OnClickData) {
   const { name, url } = extractContextData(info);
   const format = SUPPORTED_FORMATS.find((format) => {
     console.debug("checking for format: ", format);
     return format.name === name;
   });
+  
   console.debug("Supported Formats: ", SUPPORTED_FORMATS);
   console.debug("url: ", url);
   console.debug("name: ", name);
   console.debug("format: ", format);
+  
   if (!url || !name || !format)
     throw new Error("Image data inexistent or corrupted");
+    
   const dataURL = await extractImg({ img: url, format: format.mime });
   console.debug("extracted DataURL: ", dataURL);
   return { name, dataURL };
-}
-async function demountContext(oldFormats: string[]) {
-  await Promise.all(
-    oldFormats.map((format) => browser.contextMenus.remove(format)),
-  );
-
-  await browser.contextMenus.remove(id);
 }
 
 function extractContextData(info: Browser.contextMenus.OnClickData) {
   const name = info.menuItemId;
   const url = info.srcUrl;
-  return { name, url };
+  return { name: name.toString(), url };
 }
-function initializeSingular(userFormat: string) {
-  createContextMenu(userFormat);
+
+function initializeSingular(userFormat: Formats) {
+  createContextMenu(userFormat.name, `${title} as .${userFormat.name}`);
 }
-function initializeMultiple(userFormats: string[], parentId: string) {
-  userFormats.forEach((format) => createContextMenu(format, parentId));
+
+function initializeMultiple(userFormats: Formats[], parentId: string) {
+
+  createContextMenu(parentId, `Snipe It`);
+
+  userFormats.forEach((format) => {
+    createContextMenu(format.name, `as .${format.name}`, parentId);
+  });
 }
-function createContextMenu(format: string, parentId?: string) {
-  const options: Browser.contextMenus.CreateProperties = {
-    id: format,
-    title: title + `as .${format}`,
+
+function createContextMenu(id: string, title = "", parentId?: string) {
+  browser.contextMenus.create({
+    id,
+    parentId,
+    title: title || `as .${id}`,
     contexts: ["image"],
-  };
-
-  if (parentId) {
-    options.parentId = parentId;
-  }
-
-  browser.contextMenus.create(options);
+  });
 }

@@ -26,6 +26,7 @@ import { ImageExtractionRequest } from "../utils/commonInterfaces";
 import { grabAndExtractViewPort } from "../../screenshot";
 import { SelectionRectangle } from "@/entrypoints/content/drawings";
 import { Formats } from "@/entrypoints/popup/app/views/options/formats";
+import { handleContextUpdate } from "../../contextMenus/contextMenu";
 
 interface MessageMap {
   GET_SHORTCUT: {
@@ -130,6 +131,6 @@ export const MessageHandler: MessageHandlerMap = {
   SET_FORMATS: async (payload) => {
     console.debug("invoked: ", SET_FORMATS);
     console.debug("payload: ", payload);
-    return saveUserFormats(payload);
+    return await handleContextUpdate(payload);
   },
 };

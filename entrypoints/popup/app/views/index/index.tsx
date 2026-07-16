@@ -1,10 +1,8 @@
 import { useState } from "react";
-import reactLogo from "@/assets/react.svg";
-import wxtLogo from "/wxt.svg";
 import { Typography, Box, Button } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
 import { browser } from "wxt/browser";
 import { BaseViewProps } from "../../App";
+import { PoweredBy } from "../../components/poweredBy";
 
 interface IndexViewProps extends BaseViewProps {}
 function IndexView(props: IndexViewProps) {
@@ -22,11 +20,6 @@ function IndexView(props: IndexViewProps) {
   return (
     <>
       <Box>
-        <Typography variant="body2">powered by</Typography>
-        <Box component="img" src={wxtLogo} alt="Logo" />
-        <Box component="img" src={reactLogo} alt="Logo" />
-      </Box>
-      <Box>
         <Typography variant="h2">SnipeIt</Typography>
         <Typography variant="body1">
           Grab any text you see and send it straight to your clipboard.
@@ -43,6 +36,7 @@ function IndexView(props: IndexViewProps) {
         </Button>
         <Button onClick={handleComercial}>Give me a ⭐ on GitHub</Button>
       </Box>
+            <PoweredBy />
     </>
   );
 }
