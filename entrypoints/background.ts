@@ -1,5 +1,5 @@
 import { browser } from "wxt/browser";
-import { MessageHandler } from "./background/messaging/messageHandlers/contentBackground";
+import { MessageHandler } from "./background/messaging/messageHandlers/backgroundHandler";
 import { initializeOFfscreen } from "./background/osLifecycle";
 import {
   handleConversion,
