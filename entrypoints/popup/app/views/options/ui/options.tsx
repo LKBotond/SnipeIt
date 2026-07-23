@@ -9,6 +9,7 @@ import FormatOptions from "./formatOptions";
 
 export interface BaseSubOptionsProps {
   hidden: boolean;
+  className?:string
 }
 
 interface OptionsViewProps extends BaseViewProps {}
@@ -42,13 +43,14 @@ function OptionsView(props: OptionsViewProps) {
         <ShortcutOptions
           hidden={shortcutVisibility}
           shortcut={props.shortcut}
+          className="subOptions"
         ></ShortcutOptions>
 
         <Button onClick={displayLanguageOptions}>Language Settings</Button>
-        <LanguageOptions hidden={langOptVisibility}></LanguageOptions>
+        <LanguageOptions hidden={langOptVisibility} className="subOptions"></LanguageOptions>
 
         <Button onClick={displayFormatOptions}>Format options</Button>
-        <FormatOptions hidden={formatOptVisibility}></FormatOptions>
+        <FormatOptions hidden={formatOptVisibility}className="subOptions"></FormatOptions>
 
         <Button onClick={() => props.setView("index")}>Back to Home</Button>
       </Box>

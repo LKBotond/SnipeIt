@@ -45,7 +45,7 @@ function ShortcutOptions(props: ShortcutOptionsProps) {
 
   return (
     <>
-      <Box hidden={props.hidden}>
+      <Box hidden={props.hidden} className={props.className}>
         <Typography variant="h3">Shortcut Options</Typography>
         <Typography variant="body1">
           You may personalize your shortcuts here
