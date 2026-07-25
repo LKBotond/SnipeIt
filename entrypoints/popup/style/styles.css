@@ -21,7 +21,9 @@
 }
 
 .subOptions {
-  border: #2a2a2a;
-  border-width: 0.02rem;
-  
+  border-color: #2a2a2a;
+  border-style:solid;
+  padding:2rem;
+  border-width: .1m;
+  border-radius: 2rem;
 }
