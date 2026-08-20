@@ -44,7 +44,7 @@ function IndexView(props: IndexViewProps) {
         <Button className="btn" onClick={() => props.setView("options")}>
           Settings
         </Button>
-        <Button variant="outlined" color="inherit" onClick={handleCommercial}>
+        <Button className="btn" variant="outlined" color="inherit" onClick={handleCommercial}>
           Give me a ⭐ on GitHub
         </Button>
 
