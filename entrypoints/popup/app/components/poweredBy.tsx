@@ -21,8 +21,8 @@ const LogoContainer = styled(Box)(({ theme }) => ({
 
 export function PoweredBy() {
   return (
-    <LogoContainer>
-      <Typography variant="body2">powered by</Typography>
+    <LogoContainer className="logo">
+      <Typography variant="body2">Powered by</Typography>
       <Box component="img" src={wxtLogo} alt="WXT logo" />
       <Box component="img" src={reactLogo} alt="React logo" />
     </LogoContainer>

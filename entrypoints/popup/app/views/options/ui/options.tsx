@@ -1,7 +1,7 @@
 import { useState } from "react";
 import reactLogo from "@/assets/react.svg";
 import wxtLogo from "/wxt.svg";
-import { Typography, Box, Button } from "@mui/material";
+import { Typography, Box, Button, Tooltip, Divider } from "@mui/material";
 import { BaseViewProps } from "@/entrypoints/popup/app/App";
 import ShortcutOptions from "./shortcutOptions";
 import LanguageOptions from "./langOptions";
@@ -9,7 +9,7 @@ import FormatOptions from "./formatOptions";
 
 export interface BaseSubOptionsProps {
   hidden: boolean;
-  className?:string
+  className?: string;
 }
 
 interface OptionsViewProps extends BaseViewProps {}
@@ -33,26 +33,52 @@ function OptionsView(props: OptionsViewProps) {
 
   return (
     <>
-      <Box>
-        <Typography variant="h2">Options</Typography>
-        <Typography variant="body1">
-          Configure your shortcuts and OCR language packs.
-        </Typography>
+      <Box className="header">
+        <Typography variant="h3">Settings</Typography>
+      </Box>
 
-        <Button onClick={displayShortcutOptions}>Keyboard Shortcuts</Button>
+      <Box className="content">
+        <Tooltip
+          title="Shortcut settings for triggering the OCR "
+          enterDelay={500}
+          placement="top"
+        >
+          <Button className="btn" onClick={displayShortcutOptions}>
+            Keyboard Shortcuts
+          </Button>
+        </Tooltip>
         <ShortcutOptions
           hidden={shortcutVisibility}
           shortcut={props.shortcut}
-          className="subOptions"
+          className="subOptions content"
         ></ShortcutOptions>
+        <Divider />
 
-        <Button onClick={displayLanguageOptions}>Language Settings</Button>
-        <LanguageOptions hidden={langOptVisibility} className="subOptions"></LanguageOptions>
+        <Tooltip title="Text recognition language settings" enterDelay={500} placement="top">
+          <Button className="btn" onClick={displayLanguageOptions}>
+            Language Packs
+          </Button>
+        </Tooltip>
+        <LanguageOptions
+          hidden={langOptVisibility}
+          className="subOptions content"
+        ></LanguageOptions>
 
-        <Button onClick={displayFormatOptions}>Format options</Button>
-        <FormatOptions hidden={formatOptVisibility}className="subOptions"></FormatOptions>
+        <Divider />
+        <Tooltip title="Picture formats for download" enterDelay={500} placement="top">
+          <Button className="btn" onClick={displayFormatOptions}>
+            Format options
+          </Button>
+        </Tooltip>
+        <FormatOptions
+          hidden={formatOptVisibility}
+          className="subOptions content"
+        ></FormatOptions>
 
-        <Button onClick={() => props.setView("index")}>Back to Home</Button>
+        <Divider />
+        <Button className="btn" onClick={() => props.setView("index")}>
+          Back to Home
+        </Button>
       </Box>
     </>
   );

@@ -5,14 +5,13 @@ import {
   CircularProgress,
   ToggleButton,
   ToggleButtonGroup,
-  Typography,
 } from "@mui/material";
 import { SUPPORTED_FORMATS, Formats } from "../formats";
 import {
   getActiveFormats,
   updateActiveFormats,
 } from "@/entrypoints/background/messaging/messaging";
-interface FormatOptionsProps extends BaseSubOptionsProps { }
+interface FormatOptionsProps extends BaseSubOptionsProps {}
 
 function FormatOptions(props: FormatOptionsProps) {
   const [formats, setFormats] = useState<Formats[]>([]);
@@ -58,10 +57,7 @@ function FormatOptions(props: FormatOptionsProps) {
   return (
     <>
       <Box hidden={props.hidden} className={props.className}>
-        <Typography variant="h3">Format options</Typography>
-        <Typography variant="body1">
-          select the file formats that you want to show up in the context menu
-        </Typography>
+
         <ToggleButtonGroup
           value={formats.map((f) => f.name)}
           onChange={(_, newNames: string[]) => {

@@ -5,7 +5,7 @@ let worker: Tesseract.Worker | null = null;
 
 let languages: string[] = [];
 
-export function setLanguagePacks(langugePacks: string[]) {
+function setLanguagePacks(langugePacks: string[]) {
   languages = langugePacks;
 }
 

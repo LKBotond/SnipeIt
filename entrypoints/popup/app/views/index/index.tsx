@@ -1,42 +1,55 @@
-import { useState } from "react";
-import { Typography, Box, Button } from "@mui/material";
+import { Typography, Box, Button, Paper, Chip } from "@mui/material";
 import { browser } from "wxt/browser";
 import { BaseViewProps } from "../../App";
 import { PoweredBy } from "../../components/poweredBy";
 
 interface IndexViewProps extends BaseViewProps {}
+
 function IndexView(props: IndexViewProps) {
-  const [shortCut, setShortCut] = useState(props.shortcut);
-
-  const displayShortcut = (): string => {
-    return shortCut.combination.join(" + ");
-  };
-
-  const handleComercial = () => {
+  const handleCommercial = () => {
     browser.windows.create({
       url: "https://example.com",
     });
   };
+
   return (
     <>
-      <Box>
-        <Typography variant="h2">SnipeIt</Typography>
-        <Typography variant="body1">
-          Grab any text you see and send it straight to your clipboard.
+      <Box
+        className="header"
+      >
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ display: "flex", alignItems: "center" }}
+        >
+          <Box component="span">Snipe</Box>
+          <Box component="span">It</Box>
         </Typography>
-        <Typography variant="body1">
-          Fast. Private. No uploads. Just instant local OCR.
-        </Typography>
-        <Typography variant="body1">
-          Current shortcut:{" "}
-          <Typography component="span">{displayShortcut()}</Typography>
-        </Typography>
-        <Button onClick={() => props.setView("options")}>
-          Options
-        </Button>
-        <Button onClick={handleComercial}>Give me a ⭐ on GitHub</Button>
       </Box>
-            <PoweredBy />
+
+      <Box className="content">
+        <Typography variant="body2" color="text.secondary">
+          Fast, private OCR & image converter
+        </Typography>
+
+        <Paper>
+          <Typography variant="caption" color="text.secondary">
+            Current Shortcut
+          </Typography>
+          {props.shortcut.combination.map((key) => (
+            <Chip key={key} label={key} size="small" variant="outlined" />
+          ))}
+        </Paper>
+
+        <Button className="btn" onClick={() => props.setView("options")}>
+          Settings
+        </Button>
+        <Button variant="outlined" color="inherit" onClick={handleCommercial}>
+          Give me a ⭐ on GitHub
+        </Button>
+
+        <PoweredBy />
+      </Box>
     </>
   );
 }

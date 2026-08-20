@@ -11,9 +11,12 @@ export const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
+          boxSizing: "border-box",
           maxWidth: "30rem",
           margin: "0 auto",
-          padding: "1rem",
+          width: "100%",
+        },
+        "#root": {
           width: "100%",
         },
       },
@@ -26,21 +29,22 @@ export const theme = createTheme({
           gap: "0.5rem",
           width: "100%",
         },
+        grouped: {
+          border: "1px solid rgba(255, 255, 255, 0.23)",
+          borderRadius: "4px",
+        },
       },
     },
     MuiToggleButton: {
       styleOverrides: {
         root: {
-          flex: 1,
           textTransform: "none",
         },
       },
     },
     MuiButton: {
-      styleOverrides: {
-        root: {
-          width: "100%",
-        },
+      defaultProps: {
+        fullWidth: true,
       },
     },
   },

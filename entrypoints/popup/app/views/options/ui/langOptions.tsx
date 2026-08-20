@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
-import reactLogo from "@/assets/react.svg";
-import wxtLogo from "/wxt.svg";
 import { EUROPEAN_LANGUAGES } from "../languages";
 import {
-  Typography,
   Box,
   ToggleButton,
   ToggleButtonGroup,
@@ -60,7 +57,7 @@ function LanguageOptions(props: LangOptionsProps) {
   return (
     <>
       <Box hidden={props.hidden} className={props.className}>
-        <Typography variant="h3">Languages</Typography>
+
         <ToggleButtonGroup
           value={languages}
           onChange={(_, newLanguages) => setLanguages(newLanguages)}

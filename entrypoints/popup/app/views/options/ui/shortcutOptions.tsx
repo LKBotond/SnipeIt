@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import reactLogo from "@/assets/react.svg";
-import wxtLogo from "/wxt.svg";
-import { Typography, Box, Button, Paper, Stack, Chip } from "@mui/material";
+import { Typography, Box, Button, Paper, Stack, Chip, Divider } from "@mui/material";
 import { captureCombination, ShortCut } from "../capture";
 import {
   resetShortcut,
@@ -29,7 +27,7 @@ function ShortcutOptions(props: ShortcutOptionsProps) {
   };
   const displayShortcut = () => {
     return (
-      <Paper elevation={2} sx={{ p: 2, mt: 3 }}>
+      <Paper className="shortcut">
         <Typography variant="subtitle2" color="text.secondary">
           Current Shortcut
         </Typography>
@@ -46,14 +44,14 @@ function ShortcutOptions(props: ShortcutOptionsProps) {
   return (
     <>
       <Box hidden={props.hidden} className={props.className}>
-        <Typography variant="h3">Shortcut Options</Typography>
-        <Typography variant="body1">
-          You may personalize your shortcuts here
-        </Typography>
         {displayShortcut()}
 
-        <Button onClick={handleCapture}>Set my new shortcut</Button>
-        <Button onClick={handleShortcutReset}>Reset to default</Button>
+        <Button className="btn" onClick={handleCapture}>
+          Set new shortcut
+        </Button>
+        <Button className="btn" onClick={handleShortcutReset}>
+          Reset to default
+        </Button>
       </Box>
     </>
   );
