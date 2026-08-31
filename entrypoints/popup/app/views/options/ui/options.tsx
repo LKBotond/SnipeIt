@@ -1,6 +1,5 @@
 import { useState } from "react";
-import reactLogo from "@/assets/react.svg";
-import wxtLogo from "/wxt.svg";
+import { PoweredBy } from "../../../components/poweredBy";
 import { Typography, Box, Button, Tooltip, Divider } from "@mui/material";
 import { BaseViewProps } from "@/entrypoints/popup/app/App";
 import ShortcutOptions from "./shortcutOptions";
@@ -79,6 +78,7 @@ function OptionsView(props: OptionsViewProps) {
         <Button className="btn" onClick={() => props.setView("index")}>
           Back to Home
         </Button>
+        <PoweredBy/>
       </Box>
     </>
   );
