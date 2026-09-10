@@ -1,5 +1,5 @@
-import { SelectionRectangle } from "@/entrypoints/content/drawings";
-import { ShortCut } from "../../popup/app/views/options/capture";
+import type { SelectionRectangle } from "@/entrypoints/content/drawings";
+import type { ShortCut } from "../../popup/app/views/options/capture";
 import {
   GET_SHORTCUT,
   SET_SHORTCUT,
@@ -16,11 +16,11 @@ import {
   SET_FORMATS,
 } from "./utils/actions";
 
-import {
+import type {
   TextExtractionRequest,
   ImageExtractionRequest,
 } from "./utils/commonInterfaces";
-import { Formats } from "@/entrypoints/popup/app/views/options/formats";
+import type { Formats } from "@/entrypoints/popup/app/views/options/formats";
 
 function sendMessage<T_Message, T_Response>(
   message: T_Message,

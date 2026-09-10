@@ -1,5 +1,5 @@
 import { browser } from "wxt/browser";
-import { SelectionRectangle } from "../content/drawings";
+import type { SelectionRectangle } from "../content/drawings";
 import { extractText } from "./messaging/messaging";
 
 function grabViewPort() {
@@ -12,4 +12,3 @@ export async function grabAndExtractViewPort(
   console.debug("img captured: ", img);
   return extractText({ img, selectionRectangle });
 }
-

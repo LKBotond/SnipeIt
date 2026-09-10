@@ -1,4 +1,7 @@
-import { ShortCut } from "../../../popup/app/views/options/capture";
+import type { ShortCut } from "../../../popup/app/views/options/capture";
+import type { SelectionRectangle } from "@/entrypoints/content/drawings";
+import type { Formats } from "@/entrypoints/popup/app/views/options/formats";
+import type { ImageExtractionRequest } from "../utils/commonInterfaces";
 import {
   loadUsersShortCut,
   loadDefault,
@@ -22,10 +25,8 @@ import {
   SET_FORMATS,
 } from "../utils/actions";
 import { extractImg, setLanguages, updateLanguagePacks } from "../messaging";
-import { ImageExtractionRequest } from "../utils/commonInterfaces";
 import { grabAndExtractViewPort } from "../../screenshot";
-import { SelectionRectangle } from "@/entrypoints/content/drawings";
-import { Formats } from "@/entrypoints/popup/app/views/options/formats";
+
 import { handleContextUpdate } from "../../contextMenus/contextMenu";
 
 interface MessageMap {

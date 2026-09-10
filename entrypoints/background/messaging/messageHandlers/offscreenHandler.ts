@@ -10,7 +10,7 @@ import {
   setLanguagePacks,
   updateLangPreferences,
 } from "@/entrypoints/offscreen/ocrManager";
-import {
+import type {
   ImageExtractionRequest,
   TextExtractionRequest,
 } from "../utils/commonInterfaces";

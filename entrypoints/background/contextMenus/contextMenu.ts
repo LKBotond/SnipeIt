@@ -5,10 +5,8 @@ import {
   loadUserFormats,
   saveUserFormats,
 } from "../storage";
-import {
-  Formats,
-  SUPPORTED_FORMATS,
-} from "../../popup/app/views/options/formats";
+import type { Formats } from "../../popup/app/views/options/formats";
+import { SUPPORTED_FORMATS } from "../../popup/app/views/options/formats";
 import { extractImg } from "../messaging/messaging";
 
 const id = "snipeIt";
@@ -23,7 +21,13 @@ export async function initializeContextMenus() {
   }
 
   if (userFormats.length === 1) {
-    initializeSingular(userFormats[0]);
+    const format = userFormats[0];
+
+    if (!format) {
+      throw new Error("Expected a user format");
+    }
+
+    initializeSingular(format);
     return;
   }
 
@@ -50,15 +54,15 @@ export async function handleConversion(info: Browser.contextMenus.OnClickData) {
     console.debug("checking for format: ", format);
     return format.name === name;
   });
-  
+
   console.debug("Supported Formats: ", SUPPORTED_FORMATS);
   console.debug("url: ", url);
   console.debug("name: ", name);
   console.debug("format: ", format);
-  
+
   if (!url || !name || !format)
     throw new Error("Image data inexistent or corrupted");
-    
+
   const dataURL = await extractImg({ img: url, format: format.mime });
   console.debug("extracted DataURL: ", dataURL);
   return { name, dataURL };
@@ -75,7 +79,6 @@ function initializeSingular(userFormat: Formats) {
 }
 
 function initializeMultiple(userFormats: Formats[], parentId: string) {
-
   createContextMenu(parentId, `Snipe It`);
 
   userFormats.forEach((format) => {

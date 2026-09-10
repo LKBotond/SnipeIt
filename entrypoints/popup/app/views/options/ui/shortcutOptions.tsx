@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import type { BaseSubOptionsProps } from "./options";
+import type { ShortCut } from "../capture";
 import { Typography, Box, Button, Paper, Stack, Chip, Divider } from "@mui/material";
-import { captureCombination, ShortCut } from "../capture";
+import { captureCombination } from "../capture";
 import {
   resetShortcut,
   setNewShortcut,
 } from "@/entrypoints/background/messaging/messaging";
-import { BaseSubOptionsProps } from "./options";
 
 interface ShortcutOptionsProps extends BaseSubOptionsProps {
   shortcut: ShortCut;

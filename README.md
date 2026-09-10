@@ -20,3 +20,13 @@ SnipeIt requires the following browser permissions:
 - **Dynamic language settings:** SnipeIt supports multiple languages for OCR. While English is enabled by default, additional language packs can be loaded dynamically through the options menu. Note that enabling multiple languages may increase memory usage.
 - **Image conversion:** Users can right-click an image to open a dynamic context menu and convert it to a preferred format. The available export formats can be configured in the options panel.
 - **Local processing:** SnipeIt is designed with privacy in mind. All image conversions and text extractions are processed locally on your machine via an offscreen document using Tesseract.js. No data is transmitted to third-party servers. Only basic configuration settings are saved locally to preserve your preferences.
+
+## Development
+
+Start the Chrome development build with:
+
+```bash
+npm run dev
+```
+
+The dev script starts Chrome with the development extension loaded automatically, using a separate profile in `.output/chrome-dev-profile`. WXT reloads the extension as files change. Pin SnipeIt to the toolbar in that development Chrome window and click its icon to open the popup.

@@ -1,5 +1,5 @@
-import { ShortCut } from "../popup/app/views/options/capture";
-import { Formats } from "../popup/app/views/options/formats";
+import type { ShortCut } from "../popup/app/views/options/capture";
+import type { Formats } from "../popup/app/views/options/formats";
 import {
   deleteFromLocal,
   loadFromLocal,
