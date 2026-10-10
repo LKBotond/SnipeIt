@@ -3,6 +3,9 @@ import { defineConfig } from "wxt";
 export default defineConfig({
   modules: ["@wxt-dev/module-react"],
   manifest: {
+    name: 'SnipeIt',
+    version: '1.0.0',
+    description: 'Local OCR and image conversion utility tool',
     permissions: [
       "storage",
       "offscreen",
