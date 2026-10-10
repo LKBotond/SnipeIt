@@ -7,7 +7,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import { BaseSubOptionsProps } from "./options";
+import type { BaseSubOptionsProps } from "./options";
 import {
   getActiveLanguagePacks,
   updateLanguagePacks,

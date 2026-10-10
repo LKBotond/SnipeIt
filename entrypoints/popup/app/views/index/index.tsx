@@ -1,6 +1,6 @@
 import { Typography, Box, Button, Paper, Chip } from "@mui/material";
 import { browser } from "wxt/browser";
-import { BaseViewProps } from "../../App";
+import type { BaseViewProps } from "../../App";
 import { PoweredBy } from "../../components/poweredBy";
 
 interface IndexViewProps extends BaseViewProps {}

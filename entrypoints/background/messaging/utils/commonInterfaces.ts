@@ -1,4 +1,4 @@
-import { SelectionRectangle } from "@/entrypoints/content/drawings";
+import type { SelectionRectangle } from "@/entrypoints/content/drawings";
 export interface TextExtractionRequest {
   img: string;
   selectionRectangle: SelectionRectangle;

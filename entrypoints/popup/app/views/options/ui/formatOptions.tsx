@@ -1,4 +1,4 @@
-import { BaseSubOptionsProps } from "./options";
+import type { BaseSubOptionsProps } from "./options";
 import {
   Box,
   Button,
@@ -6,7 +6,8 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-import { SUPPORTED_FORMATS, Formats } from "../formats";
+import { SUPPORTED_FORMATS } from "../formats";
+import type { Formats } from "../formats";
 import {
   getActiveFormats,
   updateActiveFormats,

@@ -3,7 +3,7 @@ import {Box } from "@mui/material";
 import IndexView from "./views/index";
 import OptionsView from "./views/options/ui/options";
 import { getShortcut } from "@/entrypoints/background/messaging/messaging";
-import { ShortCut } from "./views/options/capture";
+import type { ShortCut } from "./views/options/capture";
 import "@/entrypoints/popup/style/styles.css";
 
 export type BaseViewProps = {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PoweredBy } from "../../../components/poweredBy";
 import { Typography, Box, Button, Tooltip, Divider } from "@mui/material";
-import { BaseViewProps } from "@/entrypoints/popup/app/App";
+import type { BaseViewProps } from "@/entrypoints/popup/app/App";
 import ShortcutOptions from "./shortcutOptions";
 import LanguageOptions from "./langOptions";
 import FormatOptions from "./formatOptions";

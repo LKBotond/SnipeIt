@@ -1,5 +1,5 @@
-import { TextExtractionRequest } from "../background/messaging/utils/commonInterfaces";
-import { SelectionRectangle } from "../content/drawings";
+import type { TextExtractionRequest } from "../background/messaging/utils/commonInterfaces";
+import type { SelectionRectangle } from "../content/drawings";
 
 export async function handleCropping(request: TextExtractionRequest) {
   try {
@@ -39,20 +39,36 @@ export function extractImgAs(canvas: HTMLCanvasElement, format: string) {
   return canvas.toDataURL(format);
 }
 
-async function decodeImage(base64Data: string) {
+async function decodeImage(base64Data: string): Promise<HTMLImageElement> {
   console.debug("Input string length:", base64Data.length);
 
-  const [header, base64] = base64Data.split(",");
-  const contentType = header.split(":")[1].split(";")[0];
+  const commaIndex = base64Data.indexOf(",");
+
+  if (commaIndex === -1) {
+    throw new Error("Invalid data URL: missing comma separator");
+  }
+
+  const header = base64Data.slice(0, commaIndex);
+  const base64 = base64Data.slice(commaIndex + 1);
+
+  const contentTypeMatch = header.match(/^data:([^;]+);base64$/);
+
+  if (!contentTypeMatch) {
+    throw new Error("Invalid base64 data URL header");
+  }
+
+  const contentType = contentTypeMatch[1];
 
   const byteCharacters = atob(base64);
   const byteNumbers = new Uint8Array(byteCharacters.length);
+
   for (let i = 0; i < byteCharacters.length; i++) {
     byteNumbers[i] = byteCharacters.charCodeAt(i);
   }
-  const blob = new Blob([byteNumbers], { type: contentType });
 
+  const blob = new Blob([byteNumbers], { type: contentType });
   const blobUrl = URL.createObjectURL(blob);
+
   console.debug("Created Blob URL:", blobUrl);
 
   return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -63,9 +79,9 @@ async function decodeImage(base64Data: string) {
       resolve(image);
     };
 
-    image.onerror = (e) => {
+    image.onerror = () => {
       URL.revokeObjectURL(blobUrl);
-      reject(new Error("Failed to load Blob URL"));
+      reject(new Error("Failed to load image from Blob URL"));
     };
 
     image.src = blobUrl;
