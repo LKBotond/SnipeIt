@@ -8,9 +8,9 @@ Except as permitted by the GitHub Terms of Service (such as viewing and forking 
 This repository is made publicly available solely for personal inspection and security auditing purposes. Permission is granted to download the source code and load it locally as an unpacked browser extension for the sole purpose of evaluation, testing, and security auditing. 
 
 This permission does not grant any right to:
-- Use the software for daily production or operational use.
+- Use the software for personal, commercial, or operational purposes.
 - Redistribute the software, modified or unmodified.
-- Upload the software to any browser extension store (e.g., Chrome Web Store, Firefox Add-ons).
+- Upload the software to any browser extension store (e.g., Chrome Web Store, Firefox Add-ons, etc).
 
 ### Third-Party Code
 This license applies strictly to the original code authored by Kovács Botond. Third-party dependencies included or referenced in this project (such as tesseract.js) remain subject to their respective open-source licenses.
