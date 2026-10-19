@@ -18,7 +18,7 @@ function IndexView(props: IndexViewProps) {
         className="header"
       >
         <Typography
-          variant="h6"
+          variant="h3"
           component="div"
           sx={{ display: "flex", alignItems: "center" }}
         >

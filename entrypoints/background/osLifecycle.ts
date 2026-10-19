@@ -8,9 +8,9 @@ async function checkOrCreateOffscreen() {
 
   await browser.offscreen.createDocument({
     url: "offscreen.html",
-    reasons: ["CLIPBOARD"],
+    reasons: ["WORKERS"],
     justification:
-      "Need an offscreen document to process screenshots into TXT, and or any picture to any format",
+      "Need an offscreen document to process screenshots into TXT, and to convert images between formats",
   });
 }
 async function initializeOCR() {
@@ -22,7 +22,7 @@ async function initializeOCR() {
   if (!success) throw new Error("Language packs failed to load");
 }
 
-export async function initializeOFfscreen() {
+export async function initializeOffscreen() {
   await checkOrCreateOffscreen();
   await initializeOCR();
 }

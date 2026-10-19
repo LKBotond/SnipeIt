@@ -1,6 +1,6 @@
 import { browser } from "wxt/browser";
 import { MessageHandler } from "./background/messaging/messageHandlers/backgroundHandler";
-import { initializeOFfscreen } from "./background/osLifecycle";
+import { initializeOffscreen } from "./background/osLifecycle";
 import {
   handleConversion,
   initializeContextMenus,
@@ -14,7 +14,7 @@ export default defineBackground(() => {
     .catch((error) => {
       console.error("failed to set up the context menus, ", error);
     });
-  initializeOFfscreen()
+  initializeOffscreen()
     .then(() => {
       console.debug("Offscreen document checked/set up successfully");
     })

@@ -1,5 +1,5 @@
 import type { SelectionRectangle } from "@/entrypoints/content/drawings";
-import type { ShortCut } from "../../popup/app/views/options/capture";
+import type { ShortCut } from "@/entrypoints/popup/app/views/options/ui/shortcutOptions";
 import {
   GET_SHORTCUT,
   SET_SHORTCUT,

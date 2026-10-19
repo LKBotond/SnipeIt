@@ -1,4 +1,4 @@
-import type { ShortCut } from "../popup/app/views/options/capture";
+import type { ShortCut } from "../popup/app/views/options/ui/shortcutOptions";
 import type { Formats } from "../popup/app/views/options/formats";
 import {
   deleteFromLocal,

@@ -14,21 +14,13 @@ export interface BaseSubOptionsProps {
 interface OptionsViewProps extends BaseViewProps {}
 
 function OptionsView(props: OptionsViewProps) {
-  const [shortcutVisibility, setShortcutVisibility] = useState(true);
-  const [langOptVisibility, setLangOptVisibility] = useState(true);
-  const [formatOptVisibility, setFormatOptVisibility] = useState(true);
+  const [shortcutHidden, setShortcutHidden] = useState(true);
+  const [langOptHidden, setLangOptHidden] = useState(true);
+  const [formatOptHidden, setFormatOptHidden] = useState(true);
 
-  const displayShortcutOptions = async () => {
-    setShortcutVisibility(!shortcutVisibility);
-  };
-
-  const displayLanguageOptions = () => {
-    setLangOptVisibility(!langOptVisibility);
-  };
-
-  const displayFormatOptions = () => {
-    setFormatOptVisibility(!formatOptVisibility);
-  };
+  const toggleShortcutOptions = () => setShortcutHidden((prev) => !prev);
+  const toggleLanguageOptions = () => setLangOptHidden((prev) => !prev);
+  const toggleFormatOptions = () => setFormatOptHidden((prev) => !prev);
 
   return (
     <>
@@ -38,49 +30,58 @@ function OptionsView(props: OptionsViewProps) {
 
       <Box className="content">
         <Tooltip
-          title="Shortcut settings for triggering the OCR "
+          title="Shortcut settings for triggering the OCR"
           enterDelay={500}
           placement="top"
         >
-          <Button className="btn" onClick={displayShortcutOptions}>
+          <Button className="btn" onClick={toggleShortcutOptions}>
             Keyboard Shortcuts
           </Button>
         </Tooltip>
         <ShortcutOptions
-          hidden={shortcutVisibility}
+          hidden={shortcutHidden}
           shortcut={props.shortcut}
           className="subOptions content"
-        ></ShortcutOptions>
+        />
         <Divider />
 
-        <Tooltip title="Text recognition language settings" enterDelay={500} placement="top">
-          <Button className="btn" onClick={displayLanguageOptions}>
+        <Tooltip
+          title="Text recognition language settings"
+          enterDelay={500}
+          placement="top"
+        >
+          <Button className="btn" onClick={toggleLanguageOptions}>
             Language Packs
           </Button>
         </Tooltip>
         <LanguageOptions
-          hidden={langOptVisibility}
+          hidden={langOptHidden}
           className="subOptions content"
-        ></LanguageOptions>
+        />
 
         <Divider />
-        <Tooltip title="Picture formats for download" enterDelay={500} placement="top">
-          <Button className="btn" onClick={displayFormatOptions}>
+        <Tooltip
+          title="Picture formats for download"
+          enterDelay={500}
+          placement="top"
+        >
+          <Button className="btn" onClick={toggleFormatOptions}>
             Format options
           </Button>
         </Tooltip>
         <FormatOptions
-          hidden={formatOptVisibility}
+          hidden={formatOptHidden}
           className="subOptions content"
-        ></FormatOptions>
+        />
 
         <Divider />
         <Button className="btn" onClick={() => props.setView("index")}>
           Back to Home
         </Button>
-        <PoweredBy/>
+        <PoweredBy />
       </Box>
     </>
   );
 }
+
 export default OptionsView;

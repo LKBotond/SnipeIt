@@ -1,4 +1,4 @@
-import type { ShortCut } from "../../../popup/app/views/options/capture";
+import type { ShortCut } from "@/entrypoints/popup/app/views/options/ui/shortcutOptions";
 import type { SelectionRectangle } from "@/entrypoints/content/drawings";
 import type { Formats } from "@/entrypoints/popup/app/views/options/formats";
 import type { ImageExtractionRequest } from "../utils/commonInterfaces";
@@ -11,7 +11,6 @@ import {
   saveUserLanguagePacks,
   loadUserFormats,
   loadDefaultFormat,
-  saveUserFormats,
 } from "../../storage";
 import {
   GET_SHORTCUT,
@@ -24,7 +23,7 @@ import {
   GET_FORMATS,
   SET_FORMATS,
 } from "../utils/actions";
-import { extractImg, setLanguages, updateLanguagePacks } from "../messaging";
+import { extractImg, setLanguages } from "../messaging";
 import { grabAndExtractViewPort } from "../../screenshot";
 
 import { handleContextUpdate } from "../../contextMenus/contextMenu";
@@ -112,6 +111,7 @@ export const MessageHandler: MessageHandlerMap = {
   },
   UPDATE_LANG: async (payload) => {
     console.debug("invoked: ", UPDATE_LANG);
+    if (!payload || payload.length === 0) payload = ["eng"];
     await saveUserLanguagePacks(payload);
     return setLanguages(payload);
   },

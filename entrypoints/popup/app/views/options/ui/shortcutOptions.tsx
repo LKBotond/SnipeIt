@@ -1,12 +1,15 @@
 import { useState } from "react";
 import type { BaseSubOptionsProps } from "./options";
-import type { ShortCut } from "../capture";
-import { Typography, Box, Button, Paper, Stack, Chip, Divider } from "@mui/material";
-import { captureCombination } from "../capture";
+import { Typography, Box, Button, Paper, Stack, Chip } from "@mui/material";
 import {
   resetShortcut,
   setNewShortcut,
 } from "@/entrypoints/background/messaging/messaging";
+import { ShortcutRecorder } from "./shortcutRecorder";
+
+export type ShortCut = {
+  combination: string[];
+};
 
 interface ShortcutOptionsProps extends BaseSubOptionsProps {
   shortcut: ShortCut;
@@ -14,47 +17,52 @@ interface ShortcutOptionsProps extends BaseSubOptionsProps {
 
 function ShortcutOptions(props: ShortcutOptionsProps) {
   const [shortCut, setShortCut] = useState(props.shortcut);
+  const [isCapturing, setIsCapturing] = useState(false);
 
-  const handleCapture = async () => {
-    const combination = await captureCombination();
-    console.debug("captured combination, ", combination);
-    const newShortcut = await setNewShortcut(combination);
-    console.debug("captured shortcut, ", newShortcut);
+  const handleSaveCaptured = async (keys: string[]) => {
+    const newShortcut = await setNewShortcut({ combination: keys });
     setShortCut(newShortcut);
+    setIsCapturing(false);
   };
+
   const handleShortcutReset = async () => {
     const shortcut = await resetShortcut();
     setShortCut(shortcut);
   };
-  const displayShortcut = () => {
-    return (
-      <Paper className="shortcut">
-        <Typography variant="subtitle2" color="text.secondary">
-          Current Shortcut
-        </Typography>
-
-        <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
-          {shortCut.combination.map((key) => (
-            <Chip key={key} label={key} variant="outlined" />
-          ))}
-        </Stack>
-      </Paper>
-    );
-  };
 
   return (
-    <>
-      <Box hidden={props.hidden} className={props.className}>
-        {displayShortcut()}
+    <Box hidden={props.hidden} className={props.className}>
+      {isCapturing ? (
+        <ShortcutRecorder
+          onSave={handleSaveCaptured}
+          onCancel={() => setIsCapturing(false)}
+        />
+      ) : (
+        <Box>
+          <Paper className="shortcut" sx={{ p: 2, my: 1 }}>
+            <Typography variant="subtitle2" color="text.secondary">
+              Current Shortcut
+            </Typography>
 
-        <Button className="btn" onClick={handleCapture}>
-          Set new shortcut
-        </Button>
-        <Button className="btn" onClick={handleShortcutReset}>
-          Reset to default
-        </Button>
-      </Box>
-    </>
+            <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
+              {shortCut.combination.map((key) => (
+                <Chip key={key} label={key} variant="outlined" />
+              ))}
+            </Stack>
+          </Paper>
+
+          <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
+            <Button variant="contained" onClick={() => setIsCapturing(true)}>
+              Set new shortcut
+            </Button>
+            <Button variant="outlined" onClick={handleShortcutReset}>
+              Reset to default
+            </Button>
+          </Stack>
+        </Box>
+      )}
+    </Box>
   );
 }
+
 export default ShortcutOptions;
