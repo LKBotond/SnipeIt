@@ -8,7 +8,7 @@ interface IndexViewProps extends BaseViewProps {}
 function IndexView(props: IndexViewProps) {
   const handleCommercial = () => {
     browser.windows.create({
-      url: "https://example.com",
+      url: "https://github.com/LKBotond/SnipeIt",
     });
   };
 
