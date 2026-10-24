@@ -1,5 +1,10 @@
+import { createRoot, type Root } from "react-dom/client";
+import { CircularProgress } from "@mui/material";
+
+// Necessary constants
 const loadingID = "Loading-Screen";
 const styleID = "Loading-Screen-Style";
+let spinnerRoot: Root | null = null;
 
 export function insertLoadingScreen() {
   if (document.getElementById(loadingID)) return;
@@ -38,9 +43,20 @@ function createLoadingScreenAndSpinner() {
   styleLoadingScreen(screen);
 
   const spinner = document.createElement("div");
-  styleSpinner(spinner);
+  spinner.id = "Loading-Spinner";
 
   screen.appendChild(spinner);
+
+  spinnerRoot = createRoot(spinner);
+
+  spinnerRoot.render(
+    <CircularProgress
+      size={40}
+      thickness={4}
+      sx={{ color: "#3498db" }}
+    />
+  );
+
   return screen;
 }
 
@@ -55,13 +71,4 @@ function styleLoadingScreen(screen: HTMLDivElement) {
   screen.style.display = "flex";
   screen.style.justifyContent = "center";
   screen.style.alignItems = "center";
-}
-
-function styleSpinner(spinner: HTMLDivElement) {
-  spinner.style.width = "2rem";
-  spinner.style.height = "2rem";
-  spinner.style.border = "4px solid #ddd";
-  spinner.style.borderTopColor = "#3498db";
-  spinner.style.borderRadius = "50%";
-  spinner.style.animation = "spin 1s linear infinite";
 }
