@@ -5,6 +5,11 @@ import {
   insertLoadingScreen,
   removeLoadingScreen,
 } from "./content/loadingScreen";
+import {
+  addScrollListeners,
+  removeScrollListeners,
+} from "./content/scrollPrevention";
+
 export default defineContentScript({
   matches: ["*://*/*"],
   async main() {
@@ -21,6 +26,7 @@ export default defineContentScript({
         capturing = true;
         captureScreenshot();
       }
+      
     };
     const handleKeyUp = (event: KeyboardEvent) => {
       pressed.delete(event.code);
@@ -30,22 +36,28 @@ export default defineContentScript({
       }
     };
     const captureScreenshot = async () => {
-      const { canvas, ctx } = insertCanvas();
-      let selectionRectangle = await handleDrawing(canvas, ctx);
-      if (!selectionRectangle) {
-        removeCanvas();
-        capturing = !capturing;
-        return;
-      }
+      addScrollListeners();
+      capturing = true;
       try {
-        insertLoadingScreen();
+        const { canvas, ctx } = insertCanvas();
+        let selectionRectangle = await handleDrawing(canvas, ctx);
         removeCanvas();
-        await captureScreen(selectionRectangle);
+
+        if (!selectionRectangle) {
+          removeScrollListeners();
+          return;
+        }
+
+        const capturePromise = captureScreen(selectionRectangle);
+        insertLoadingScreen();
+        await capturePromise;
       } catch (error) {
         console.error("failed to capture the screenshot: ", error);
       } finally {
+        removeCanvas(); //fallback for something unexpected
         removeLoadingScreen();
-        capturing = !capturing;
+        removeScrollListeners();
+        capturing = false;
       }
     };
     window.addEventListener("keydown", handleKeyDown);
